@@ -16,6 +16,9 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('status');
+            $table->date('start_date');
+            $table->date('end_date');
         });
     }
 
