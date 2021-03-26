@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::prefix('dashboard')->group(__DIR__ . '/dashboard.php');
+});
+
+Route::middleware(['auth'])->group(function () {
     Route::prefix('claims')->group(__DIR__ . '/claims.php');
     Route::prefix('policies')->group(__DIR__ . '/policies.php');
     Route::prefix('subscriptions')->group(__DIR__ . '/subscriptions.php');
