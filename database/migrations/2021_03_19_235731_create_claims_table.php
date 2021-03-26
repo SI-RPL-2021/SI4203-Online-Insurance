@@ -19,6 +19,7 @@ class CreateClaimsTable extends Migration
             $table->string("status");
             $table->string("note");
             $table->integer("amount");
+            $table->foreignId('user_id');
 
 
         });

@@ -13,4 +13,8 @@ class Claim extends Model
         'note',
         'amount'
     ];
+    public function customer()
+    {
+        return $this->hasOne(User::class);
+    }
 }
