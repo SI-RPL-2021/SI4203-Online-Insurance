@@ -16,6 +16,11 @@ class CreateClaimsTable extends Migration
         Schema::create('claims', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string("status");
+            $table->string("note");
+            $table->integer("amount");
+
+
         });
     }
 
