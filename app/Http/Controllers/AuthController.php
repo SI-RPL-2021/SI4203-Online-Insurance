@@ -15,13 +15,13 @@ class AuthController extends Controller
 
 
         if (Auth::attempt($credentials)) {
-            if (!Auth::user()->verified) {
-                return back()->withErrors([
-                    'verification' => 'Please wait until your verification process accepted',
-                ]);
-            }
+            // if (!Auth::user()->verified) {
+            //     return back()->withErrors([
+            //         'verification' => 'Please wait until your verification process accepted',
+            //     ]);
+            // }
             $req->session()->regenerate();
-            return redirect(route('dash'));
+            return redirect(route('dashboard.home'));
         }
 
         return back()->withErrors([
