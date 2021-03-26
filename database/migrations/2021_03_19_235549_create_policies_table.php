@@ -16,6 +16,9 @@ class CreatePoliciesTable extends Migration
         Schema::create('policies', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->String('name');
+            $table->String('desc');
+            $table->integer('premium');
         });
     }
 
