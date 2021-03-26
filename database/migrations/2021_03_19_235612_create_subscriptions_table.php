@@ -19,6 +19,8 @@ class CreateSubscriptionsTable extends Migration
             $table->string('status');
             $table->date('start_date');
             $table->date('end_date');
+            $table->foreignId('policy_id');
+            $table->foreignId('user_id');
         });
     }
 
