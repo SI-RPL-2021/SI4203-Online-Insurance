@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Claim;
+
 
 class ClaimController extends Controller
 {
     public function home (){
-        $claims = claim::all();
+        $claims = Claim::all();
         return view('claims', ['claims' => $claims]);
     }
     public function create (){
@@ -34,7 +36,7 @@ class ClaimController extends Controller
         return redirect(route('claims.home'));
     }
     public function detail (Request $req, $id){
-        $claim = claim::find(id);
+        $claim = Claim::find(id);
         return view('claim', ['claim' => $claim]);
     }
 }

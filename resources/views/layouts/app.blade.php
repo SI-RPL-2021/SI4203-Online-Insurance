@@ -14,7 +14,7 @@
 
   @endcomponent
   <div class="bg-gray-100">
-    <main style="margin-left: 15rem">
+    <main>
       @yield('content')
     </main>
   </div>

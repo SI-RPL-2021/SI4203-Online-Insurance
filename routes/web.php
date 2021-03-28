@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,9 +27,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('transactions')->group(__DIR__ . '/transactions.php');
 });
 
-Route::get('/', function () {
-    return view('home');
-})->name("home");
+Route::get('/', [HomeController::class, 'home'])->name('home');
+
 
 Route::get('/login', function () {
     return view('login');

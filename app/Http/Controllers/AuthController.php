@@ -21,7 +21,11 @@ class AuthController extends Controller
             //     ]);
             // }
             $req->session()->regenerate();
-            return redirect(route('dashboard.home'));
+            if (Auth::user()->role == 'admin') {
+                return redirect(route('dashboard.home'));
+            } else {
+                return redirect(route('home'));
+            }
         }
 
         return back()->withErrors([
@@ -36,9 +40,9 @@ class AuthController extends Controller
 
         if ($usr) {
             $credentials['role'] = 'staff';
-            $credentials['verified'] = false;
+            $credentials['verified'] = true;
         } else {
-            $credentials['role'] = 'manager';
+            $credentials['role'] = 'admin';
             $credentials['verified'] = true;
         }
 

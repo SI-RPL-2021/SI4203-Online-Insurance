@@ -1,12 +1,12 @@
 @extends('layouts.dashboard')
-@section('title', 'Subscriptions')
+@section('title', 'Policies')
 
 @section('content')
 
 <div class="container pb-5">
   {{-- Content --}}
-  @foreach($subscriptions as $subscription)
-  <p>{{ $subscription->status }}</p>
+  @foreach($transactions as $transaction)
+  <p>{{ $transaction->amount }}</p>
 
   @endforeach
 </div>
