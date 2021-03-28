@@ -14,4 +14,12 @@ class Subscription extends Model
         'customer',
         'status'
     ];
+    public function customer()
+    {
+        return $this->hasOne(User::class);
+    }
+    public function policy()
+    {
+        return $this->hasOne(Policy::class);
+    }
 }
