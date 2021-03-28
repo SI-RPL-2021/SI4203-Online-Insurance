@@ -13,4 +13,6 @@ class Policy extends Model
         'premium',
         'desc',
     ];
+
+    
 }
