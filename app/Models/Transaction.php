@@ -10,6 +10,17 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
+        'status',
         'amount',
+        'paymentMethod',
     ];
+
+    public function subscription()
+    {
+        return $this->hasOne(Subscription::class);
+    }
+    public function customer()
+    {
+        return $this->hasOne(User::class);
+    }
 }

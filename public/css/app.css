@@ -1,0 +1,36 @@
+html,
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    padding-top: 55.9px;
+}
+
+.nav-link:hover {
+    color: #ffc107 !important;
+}
+
+.btn {
+    font-weight: 600;
+}
+
+.btn-warning {
+    color: #664d03;
+}
+.bg-yellow-100 {
+    background-color: #fff3cd;
+}
+
+.text-gray-500 {
+    color: #adb5bd;
+}
+
+.sidebar-heading {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#sidebar-wrapper .btn:focus {
+    outline: none;
+    box-shadow: none;
+}

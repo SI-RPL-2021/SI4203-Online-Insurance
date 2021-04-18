@@ -9,10 +9,16 @@ class Subscription extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'start_date',
-        'end_date',
-        'customer',
-        'status'
+        'startDate',
+        'endDate',
+        'status',
+        'maxCoverage',
+        'premium',
+        'gender',
+        'fullName',
+        'birthdate',
+        'phone',
+        'address',
     ];
     public function customer()
     {
