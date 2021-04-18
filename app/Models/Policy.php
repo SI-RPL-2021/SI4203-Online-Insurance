@@ -12,7 +12,8 @@ class Policy extends Model
         'name',
         'premium',
         'desc',
+        'type',
+        'img',
+        'tags'
     ];
-
-    
 }

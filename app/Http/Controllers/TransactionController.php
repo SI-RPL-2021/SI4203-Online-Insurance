@@ -12,6 +12,7 @@ class TransactionController extends Controller
         $transactions = Transaction::all();
         return view('transactions', ['transactions' => $transactions]);
     }
+
     public function detail(Request $req, $id)
     {
 

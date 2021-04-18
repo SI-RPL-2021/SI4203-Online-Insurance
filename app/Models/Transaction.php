@@ -12,6 +12,7 @@ class Transaction extends Model
     protected $fillable = [
         'status',
         'amount',
+        'paymentMethod',
     ];
 
     public function subscription()

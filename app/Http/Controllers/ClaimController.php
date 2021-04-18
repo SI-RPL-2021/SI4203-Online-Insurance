@@ -8,23 +8,33 @@ use App\Models\Claim;
 
 class ClaimController extends Controller
 {
-    public function home (){
+    public function home()
+    {
         $claims = Claim::all();
         return view('claims', ['claims' => $claims]);
     }
-    public function create (){
+    public function create(Request $req)
+    {
         Claim::create([
-            'status' => $req->status,
+            'status' => "pending",
             'note' => $req->note,
-            'amount' => $req->amount
+            'coverage' => 0,
+            'claimantName' => $req->claimantName,
+            'diagnosis' => $req->diagnosis,
+            'hospitalizeDate' => $req->hospitalizeDate,
+            'hospitalizeduration' => $req->hospitalizeduration,
+            'medcareName' => $req->medcareName,
+            'claimType' => $req->claimType
         ]);
         return redirect(route('claims.home'));
     }
-    public function delete (Request $req, $id){
+    public function delete(Request $req, $id)
+    {
         Claim::destroy($id);
         return redirect(route('claims.home'));
     }
-    public function update (Request $req, $id){
+    public function update(Request $req, $id)
+    {
         $claim = Claim::find($id);
 
         if ($claim) {
@@ -35,8 +45,9 @@ class ClaimController extends Controller
         }
         return redirect(route('claims.home'));
     }
-    public function detail (Request $req, $id){
-        $claim = Claim::find(id);
+    public function detail(Request $req, $id)
+    {
+        $claim = Claim::find($id);
         return view('claim', ['claim' => $claim]);
     }
 }

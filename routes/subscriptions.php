@@ -3,8 +3,13 @@
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [SubscriptionController::class, 'home'])->name("subscriptions.home");
-Route::get('/{id}', [SubscriptionController::class, 'detail'])->name("subscriptions.detail");
-Route::post('/', [SubscriptionController::class, 'create'])->name("subscriptions.create");
-Route::delete('/{id}', [SubscriptionController::class, 'delete'])->name("subscriptions.delete");
-Route::put('/{id}', [SubscriptionController::class, 'update'])->name("subscriptions.update");
+Route::middleware(['auth'])->group(function () {
+	Route::get('/', [SubscriptionController::class, 'home'])->name("subscription.home");
+	Route::get('/{id}', [SubscriptionController::class, 'detail'])->name("subscription.detail");
+	Route::post('/', [SubscriptionController::class, 'create'])->name("subscription.create");
+	Route::get('/checkout/{id}', [SubscriptionController::class, 'checkout'])->name("subscription.checkout");
+});
+Route::middleware(['auth', 'admin'])->group(function () {
+	Route::delete('/{id}', [SubscriptionController::class, 'delete'])->name("subscription.delete");
+	Route::post('/{id}', [SubscriptionController::class, 'update'])->name("subscription.update");
+});

@@ -17,8 +17,17 @@ class CreateSubscriptionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('status');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('startDate');
+            $table->date('endDate');
+            $table->integer('maxCoverage');
+            $table->integer('premium');
+
+            $table->string('gender');
+            $table->string('fullName');
+            $table->date('birthdate');
+            $table->string('phone');
+            $table->string('address');
+
             $table->foreignId('policy_id');
             $table->foreignId('user_id');
         });

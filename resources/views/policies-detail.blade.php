@@ -3,15 +3,14 @@
 
 @section('content')
 
-<div class="container pb-5">
-  {{-- Content --}}
-  <form action="{{route('policies.create')}}" method="POST">
-  @csrf
-    <input type="text" name="name" id="name">
-    <input type="text" name="premium" id="spremium">
-    <input type="text" name="desc" id="desc">
-    <button type="submit">Create</button>
-  </form>
+<div class="container py-5">
+  <div class="card">
+    <div class="card-body rounded-3 p-md-5">
+      <h4>{{ $policy->name }}</h4>
+      <p>{{ $policy->desc }}</p>
+      <a href="{{ route('subscription.detail', ['id' => '1' ]) }}" class="btn btn-warning">Buy Now</a>
+    </div>
+  </div>
 </div>
 
 @endsection

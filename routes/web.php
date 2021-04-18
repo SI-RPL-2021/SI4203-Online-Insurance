@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,13 +21,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::prefix('claims')->group(__DIR__ . '/claims.php');
-    Route::prefix('policies')->group(__DIR__ . '/policies.php');
+    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
     Route::prefix('subscriptions')->group(__DIR__ . '/subscriptions.php');
     Route::prefix('transactions')->group(__DIR__ . '/transactions.php');
 });
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
+
+
+Route::prefix('policies')->group(__DIR__ . '/policies.php');
+Route::prefix('claims')->group(__DIR__ . '/claims.php');
 
 
 Route::get('/login', function () {

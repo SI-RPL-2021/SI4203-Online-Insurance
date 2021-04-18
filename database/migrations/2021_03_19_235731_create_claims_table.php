@@ -13,15 +13,21 @@ class CreateClaimsTable extends Migration
      */
     public function up()
     {
-        Schema::create('claims', function (Blueprint $table) {
+        Schema::create("claims", function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string("status");
             $table->string("note");
-            $table->integer("amount");
-            $table->foreignId('user_id');
-
-
+            $table->integer("coverage");
+            $table->string("claimantName");
+            $table->string("diagnosis");
+            $table->date("hospitalizeDate");
+            $table->integer("hospitalizeDuration");
+            $table->string("medcareName");
+            $table->string("claimType");
+            $table->foreignId("subscription_id");
+            $table->foreignId("user_id");
+            $table->foreignId("policy_id");
         });
     }
 
@@ -32,6 +38,6 @@ class CreateClaimsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('claims');
+        Schema::dropIfExists("claims");
     }
 }

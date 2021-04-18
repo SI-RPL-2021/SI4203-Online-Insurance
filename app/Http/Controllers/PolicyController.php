@@ -8,35 +8,43 @@ use App\Models\Policy;
 class PolicyController extends Controller
 {
 
-    public function home (){
+    public function home()
+    {
         $Policies = Policy::all();
         return view('policies', ['policies' => $Policies]);
     }
-    public function create (){
-        Transaction::create([
+    public function create(Request $req)
+    {
+        Policy::create([
             'name' => $req->name,
-            'premium' => $req->premium,
-            'desc' => $req->desc
+            'desc' => $req->desc,
+            'tags' => $req->tags,
+            'type' => 0,
+            'img' => '',
+            'premium' => 0
         ]);
-        return redirect(route('policies.home'));
+        return redirect(route('dashboard.policies'));
     }
-    public function delete (Request $req,$id){
+    public function delete(Request $req, $id)
+    {
         Policy::destroy($id);
-        return redirect(route('policies.home'));
+        return redirect(route('dashboard.policies'));
     }
-    public function update (Request $req,$id){
-        $Policy = Policy::find($id);
+    public function update(Request $req, $id)
+    {
+        $policy = Policy::find($id);
 
-        if ($Policy) {
-            $Policy->name = $req->name;
-            $Policy->premium = $req->premium;
-            $Policy->desc = $req->desc;
-            $Policy->save();
+        if ($policy) {
+            $policy->name = $req->name;
+            $policy->desc = $req->desc;
+            $policy->tags = $req->tags;
+            $policy->save();
         }
-        return redirect(route('policies.home'));
+        return redirect(route('dashboard.policies'));
     }
-    public function detail (Request $req,$id){
-        $Policy = Policy::find($id);
-        return view('Policy', ['Policy' => $Policy]);
+    public function detail(Request $req, $id)
+    {
+        $policy = Policy::find($id);
+        return view('policies-detail', ['policy' => $policy]);
     }
 }
