@@ -1,4 +1,4 @@
-# Warehouse Management System
+# LIFE Insurance +
 
 ## Instruction
 
