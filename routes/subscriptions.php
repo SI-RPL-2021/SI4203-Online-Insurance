@@ -7,7 +7,6 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/', [SubscriptionController::class, 'home'])->name("subscription.home");
 	Route::get('/{id}', [SubscriptionController::class, 'detail'])->name("subscription.detail");
 	Route::post('/', [SubscriptionController::class, 'create'])->name("subscription.create");
-	Route::get('/checkout/{id}', [SubscriptionController::class, 'checkout'])->name("subscription.checkout");
 });
 Route::middleware(['auth', 'admin'])->group(function () {
 	Route::delete('/{id}', [SubscriptionController::class, 'delete'])->name("subscription.delete");
