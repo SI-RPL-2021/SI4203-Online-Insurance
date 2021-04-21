@@ -14,18 +14,21 @@ class Subscription extends Model
         'status',
         'maxCoverage',
         'premium',
+        'policy_name',
         'gender',
         'fullName',
         'birthdate',
         'phone',
         'address',
+        'policy_id',
+        'customer_id'
     ];
     public function customer()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'id', 'customer_id');
     }
     public function policy()
     {
-        return $this->hasOne(Policy::class);
+        return $this->hasOne(Policy::class, 'id', 'policy_id');
     }
 }

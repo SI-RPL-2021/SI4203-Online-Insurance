@@ -17,9 +17,10 @@ class CreateSubscriptionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('status');
-            $table->date('startDate');
-            $table->date('endDate');
+            $table->date('startDate')->nullable(true);
+            $table->date('endDate')->nullable(true);
             $table->integer('maxCoverage');
+            $table->string('policy_name');
             $table->integer('premium');
 
             $table->string('gender');
@@ -29,7 +30,7 @@ class CreateSubscriptionsTable extends Migration
             $table->string('address');
 
             $table->foreignId('policy_id');
-            $table->foreignId('user_id');
+            $table->foreignId('customer_id');
         });
     }
 

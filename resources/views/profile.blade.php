@@ -24,13 +24,14 @@
         </thead>
         <tbody>
           <tr>
-
-            <td>Jiwasraya</td>
-            <td>Rp. 100.000 / bulan</td>
+            @foreach($subscriptions as $subscription)
+            <td>{{ $subscription->policy_name }}</td>
+            <td>{{ $subscription->premium }}</td>
             <td>
-              <span class="badge bg-success">Aktif</span>
+              <span class="badge bg-success">{{ $subscription->status }}</span>
             </td>
-            <td>24/04/2021</td>
+            <td>{{ $subscription->created_at }}</td>
+            @endforeach
 
           </tr>
         </tbody>

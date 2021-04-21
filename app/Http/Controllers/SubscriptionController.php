@@ -29,19 +29,24 @@ class SubscriptionController extends Controller
     public function create(Request $req)
     {
         $policy = Policy::find($req->policyId);
+        $userId = Auth::user()->id;
+
         Subscription::create([
-            'startDate' => '',
-            'endDate' => '',
-            'customer' => Auth::user(),
+            'startDate' => null,
+            'endDate' => null,
             'status' => 'pending',
             'fullName' => $req->fullName,
             'birthdate' => $req->birthdate,
             'phone' => $req->phone,
             'address' => $req->address,
             'gender' => $req->gender,
-            'policy' => $policy,
+            'maxCoverage' => 0,
+            'premium' => 0,
+            'policy_id' => $policy->id,
+            'customer_id' => $userId
         ]);
-        return redirect(route('profile'));
+
+        return redirect(route('user.profile'));
     }
     public function delete(Request $req, $id)
     {
