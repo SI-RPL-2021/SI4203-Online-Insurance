@@ -43,6 +43,7 @@ class SubscriptionController extends Controller
             'maxCoverage' => 0,
             'premium' => 0,
             'policy_id' => $policy->id,
+            'policy_name' => $policy->name,
             'customer_id' => $userId
         ]);
 
