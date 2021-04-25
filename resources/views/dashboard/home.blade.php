@@ -9,7 +9,7 @@
       <div class="card">
         <div class="card-body">
           <h4 class="fw-bold fs-2">
-            18
+            {{$subscriptionsActive}}
           </h4>
           <div class="text-gray-500">Jumlah pelanggan aktif</div>
         </div>
@@ -19,7 +19,7 @@
       <div class="card">
         <div class="card-body">
           <h4 class="fw-bold fs-2">
-            21
+          {{$subscriptionsPending}}
           </h4>
           <div class="text-gray-500">Jumlah subscription pending</div>
         </div>
@@ -29,9 +29,9 @@
       <div class="card">
         <div class="card-body">
           <h4 class="fw-bold fs-2">
-            25
+          {{$claimsPending}}
           </h4>
-          <div class="text-gray-500">Jumlah pembayaran jatuh tempo</div>
+          <div class="text-gray-500">Jumlah claim pending</div>
         </div>
       </div>
     </div>

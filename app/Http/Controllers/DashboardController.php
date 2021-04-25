@@ -12,9 +12,17 @@ use App\Models\Transaction;
 
 class DashboardController extends Controller
 {
+
     public function home()
-    {
-        return view('dashboard/home');
+    {        
+        $claimsPending = Claim::where('status', 'pending')->count();
+        $subscriptionsPending = Subscription::where('status', 'pending')->count();
+        $subscriptionsActive = Subscription::where('status', 'active')->count();
+
+        // $transactions = Transaction::all();
+
+        return view('dashboard/home', ['claimsPending' => $claimsPending, 'subscriptionsPending' => $subscriptionsPending, 'subscriptionActive' => $subscriptionsActive]) ;
+        
     }
     public function claims()
     {
