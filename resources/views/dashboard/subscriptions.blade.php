@@ -18,31 +18,106 @@
       </tr>
     </thead>
     <tbody>
+    @foreach($subscriptionsPending as $subscription)
       <tr>
-        <td>01</td>
-        <td>Ghufron Fikri</td>
-        <td>429873</td>
-        <td>L</td>
+        <td>{{$subscription->id}}</td>
+        <td>{{$subscription->fullName}}</td>
+        <td>{{$subscription->phone}}</td>
+        <td>{{$subscription->gender}}</td>
         <td>
-          24/04/1999
+        {{$subscription->birthdate}}
         </td>
         <td>
-          Bandung
+        {{$subscription->address}}
         </td>
         <td>
-          <a href="#" class="btn btn-sm btn-light">
+          <a href="{{route('dashboard.subscriptions.detail', ['id' => $subscription->id])}}" class="btn btn-sm btn-light">
             Edit
           </a>
-          <a href="#" class="btn btn-sm btn-light">
+          <a href="{{route('subscription.delete', ['id' => $subscription->id])}}" class="btn btn-sm btn-light">
             Delete
           </a>
         </td>
       </tr>
+      @endforeach
     </tbody>
   </table>
   <h5>Active Subscriptions</h5>
-  <h5>Lapse Subscriptions</h5>
-
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Gender</th>
+        <th>Birthdate / Age</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    @foreach($subscriptionsActive as $subscription)
+      <tr>
+        <td>{{$subscription->id}}</td>
+        <td>{{$subscription->fullName}}</td>
+        <td>{{$subscription->phone}}</td>
+        <td>{{$subscription->gender}}</td>
+        <td>
+        {{$subscription->birthdate}}
+        </td>
+        <td>
+        {{$subscription->address}}
+        </td>
+        <td>
+          <a href="{{route('dashboard.subscriptions.detail', ['id' => $subscription->id])}}" class="btn btn-sm btn-light">
+            Edit
+          </a>
+          <a href="{{route('subscription.delete', ['id' => $subscription->id])}}" class="btn btn-sm btn-light">
+            Delete
+          </a>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+  <h5>Rejected Subscriptions</h5>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Gender</th>
+        <th>Birthdate / Age</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    @foreach($subscriptionsRejected as $subscription)
+      <tr>
+        <td>{{$subscription->id}}</td>
+        <td>{{$subscription->fullName}}</td>
+        <td>{{$subscription->phone}}</td>
+        <td>{{$subscription->gender}}</td>
+        <td>
+        {{$subscription->birthdate}}
+        </td>
+        <td>
+        {{$subscription->address}}
+        </td>
+        <td>
+          <a href="{{route('dashboard.subscriptions.detail', ['id' => $subscription->id])}}" class="btn btn-sm btn-light">
+            Edit
+          </a>
+          <a href="{{route('subscription.delete', ['id' => $subscription->id])}}" class="btn btn-sm btn-light">
+            Delete
+          </a>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
 
 </div>
 @endsection
