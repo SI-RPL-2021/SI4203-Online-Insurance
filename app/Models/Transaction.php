@@ -12,6 +12,8 @@ class Transaction extends Model
     protected $fillable = [
         'status',
         'amount',
+        'customerName',
+        'paymentDate',
         'paymentMethod',
     ];
 
