@@ -14,6 +14,8 @@
         <th>Amount</th>
         <th>Status</th>
         <th>Payment Method</th>
+        <th>Action</th>
+
       </tr>
     </thead>
     <tbody>
@@ -29,6 +31,9 @@
         </td>
         <td>
           Wire Transfer
+        </td>
+        <td>
+          <a href="{{  route('dashboard.transactions.detail', ['id' => 1]) }}" class="btn btn-light">Detail</a>
         </td>
       </tr>
     </tbody>
