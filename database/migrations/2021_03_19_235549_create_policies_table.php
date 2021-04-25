@@ -22,6 +22,7 @@ class CreatePoliciesTable extends Migration
             $table->String('type');
             $table->String('img');
             $table->String('tags');
+            $table->string('claimType');
         });
     }
 

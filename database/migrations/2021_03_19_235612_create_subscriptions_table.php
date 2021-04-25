@@ -28,6 +28,7 @@ class CreateSubscriptionsTable extends Migration
             $table->date('birthdate');
             $table->string('phone');
             $table->string('address');
+            $table->string('claimType');
 
             $table->foreignId('policy_id');
             $table->foreignId('customer_id');

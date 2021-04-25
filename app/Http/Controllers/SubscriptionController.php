@@ -42,6 +42,7 @@ class SubscriptionController extends Controller
             'gender' => $req->gender,
             'maxCoverage' => 0,
             'premium' => 0,
+            'claimType' => $policy->claimType,
             'policy_id' => $policy->id,
             'policy_name' => $policy->name,
             'customer_id' => $userId
@@ -74,6 +75,7 @@ class SubscriptionController extends Controller
             // $subscription->customer_id = $userId;
             $subscription->save();
         }
+
         return redirect(route('dashboard.subscriptions'));
     }
 }

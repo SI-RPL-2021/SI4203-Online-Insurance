@@ -14,6 +14,7 @@ class Policy extends Model
         'desc',
         'type',
         'img',
-        'tags'
+        'tags',
+        'claimType'
     ];
 }

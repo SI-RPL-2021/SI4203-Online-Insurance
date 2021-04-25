@@ -20,6 +20,7 @@ class Subscription extends Model
         'birthdate',
         'phone',
         'address',
+        'claimType',
         'policy_id',
         'customer_id'
     ];

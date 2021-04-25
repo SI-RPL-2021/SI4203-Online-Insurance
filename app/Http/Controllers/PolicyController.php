@@ -21,7 +21,8 @@ class PolicyController extends Controller
             'tags' => $req->tags,
             'type' => 0,
             'img' => '',
-            'premium' => 0
+            'premium' => 0,
+            'claimType' => $req->claimType
         ]);
         return redirect(route('dashboard.policies'));
     }

@@ -8,6 +8,8 @@
     <div class="card-body p-md-5">
       <h5 class="mb-3">Form Klaim Rawat Inap</h5>
       <form action="{{route('claim.create')}}" method="POST">
+        @csrf
+        <input type="hidden" name="claimType" value="{{ $subscription->claimType }}">
         <div class="row">
           <div class="col-12 col-md-6">
             <div class="mb-3">

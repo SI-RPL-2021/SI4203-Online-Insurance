@@ -16,7 +16,7 @@ class UserController extends Controller
 
         // $policies = Policy::all();
         $subscriptions = Subscription::where('customer_id', $user->id)->get();
-        $transactions = Transaction::where('customer_id', $user->id)->get();
+        $transactions = Transaction::where('user_id', $user->id)->get();
 
         return view('profile', ['subscriptions' => $subscriptions, 'transactions' => $transactions]);
     }
