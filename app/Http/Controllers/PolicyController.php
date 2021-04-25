@@ -21,8 +21,8 @@ class PolicyController extends Controller
             'tags' => $req->tags,
             'type' => 0,
             'img' => '',
-            'premium' => 0,
-            'claimType' => $req->claimType
+            'premium' => $req->premium,
+            'claimType' => $req->kategori
         ]);
         return redirect(route('dashboard.policies'));
     }
@@ -39,6 +39,9 @@ class PolicyController extends Controller
             $policy->name = $req->name;
             $policy->desc = $req->desc;
             $policy->tags = $req->tags;
+            $policy->img ='';
+            $policy->premium = $req->premium;
+            $policy->claimType = $req->kategori;
             $policy->save();
         }
         return redirect(route('dashboard.policies'));

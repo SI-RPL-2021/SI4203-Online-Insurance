@@ -23,6 +23,22 @@
 						<input type="text" name="tags" id="tags" value="{{ $policy ? $policy->tags : '' }}" class="form-control">
 					</div>
 
+					<label for="kategori" class="form-label">Kategori</label>
+					<select class="form-control" name="kategori" id="kategori">
+							<option value="Kesehatan">Kesehatan</option>
+							<option value="Kematian">Kematian</option>
+						</select>
+
+						<div class="mb-4">
+						<label for="premium" class="form-label">premium</label>
+						<input type="number" name="premium" id="premium" value="{{ $policy ? $policy->premium : '' }}" class="form-control">
+					</div>
+					
+					<div class="mb-3">
+              <label for="formFile" class="form-label">Image</label>
+              <input class="form-control" name="img" type="file" id="formFile">
+            </div>
+
 					<div class="text-end">
 						<button type="submit" class="btn btn-warning">Submit</button>
 					</div>
