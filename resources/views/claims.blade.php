@@ -4,17 +4,6 @@
 @section('content')
 
 <div class="container py-5">
-  {{-- Content --}}
-
-  <!-- @foreach($claims as $claim)
-  <p>{{ $claim->status }}</p>
-  <p>{{ $claim->note }}</p>
-  <p>{{ $claim->amount }}</p>
-
-  @endforeach -->
-
-  <!-- FORM claim -->
-
   <div class="card">
     <div class="card-body p-md-5">
       <h5 class="mb-3">Form Klaim Rawat Inap</h5>

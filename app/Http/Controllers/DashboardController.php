@@ -14,15 +14,14 @@ class DashboardController extends Controller
 {
 
     public function home()
-    {        
+    {
         $claimsPending = Claim::where('status', 'pending')->count();
         $subscriptionsPending = Subscription::where('status', 'pending')->count();
         $subscriptionsActive = Subscription::where('status', 'active')->count();
 
         // $transactions = Transaction::all();
 
-        return view('dashboard/home', ['claimsPending' => $claimsPending, 'subscriptionsPending' => $subscriptionsPending, 'subscriptionActive' => $subscriptionsActive]) ;
-        
+        return view('dashboard/home', ['claimsPending' => $claimsPending, 'subscriptionsPending' => $subscriptionsPending, 'subscriptionsActive' => $subscriptionsActive]);
     }
     public function claims()
     {
@@ -31,8 +30,10 @@ class DashboardController extends Controller
     }
     public function subscriptions()
     {
-        $subscriptions = Subscription::all();
-        return view('dashboard/subscriptions', ['subscriptions' => $subscriptions]);
+        $subscriptionsPending = Subscription::where('status', 'pending')->get();
+        $subscriptionsActive = Subscription::where('status', 'active')->get();
+        $subscriptionsRejected = Subscription::where('status', 'rejected')->get();
+        return view('dashboard/subscriptions', ['subscriptionsRejected' => $subscriptionsRejected, 'subscriptionsPending' => $subscriptionsPending, 'subscriptionsActive' => $subscriptionsActive]);
     }
     public function policies()
     {
@@ -65,7 +66,7 @@ class DashboardController extends Controller
 
     public function subscriptionsDetail(Request $req, $id)
     {
-        if ($id == 0) {
+        if ($id == '0') {
             return view('dashboard/subscriptions-detail', ['subscription' => []]);
         }
         $subscription = Subscription::find($id);

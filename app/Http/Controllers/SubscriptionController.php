@@ -59,21 +59,21 @@ class SubscriptionController extends Controller
         $subscription = Subscription::find($id);
 
         if ($subscription) {
-            $subscription->startDate = $req->date;
-            $subscription->endDate = $req->enddate;
+            // $subscription->startDate = $req->date;
+            // $subscription->endDate = $req->enddate;
             $subscription->status = $req->status;
-            $subscription->fullName = $req->fullName;
-            $subscription->birthdate = $req->birthdate;
-            $subscription->phone = $req->phone;
-            $subscription->address = $req->address;
-            $subscription->gender = $req->gender;
-            $subscription->maxCoverage = $req->coverage;
+            // $subscription->fullName = $req->fullName;
+            // $subscription->birthdate = $req->birthdate;
+            // $subscription->phone = $req->phone;
+            // $subscription->address = $req->address;
+            // $subscription->gender = $req->gender;
+            $subscription->maxCoverage = $req->maxCoverage;
             $subscription->premium = $req->premium;
             // $subscription->policy_id = $policy->id;
             // $subscription->policy_name = $policy->name;
             // $subscription->customer_id = $userId;
             $subscription->save();
         }
-        return redirect(route('subscriptions.home'));
+        return redirect(route('dashboard.subscriptions'));
     }
 }

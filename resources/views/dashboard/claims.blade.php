@@ -3,9 +3,9 @@
 
 @section('content')
 
-<div class="container pb-5">
+<div class="container p-4">
 
-<table class="table">
+  <table class="table">
     <thead>
       <tr>
         <th>Tanggal</th>
