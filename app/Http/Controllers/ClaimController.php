@@ -10,8 +10,9 @@ class ClaimController extends Controller
 {
     public function home()
     {
-        $claims = Claim::all();
-        return view('claims', ['claims' => $claims]);
+        $user = Auth::user();
+        $subscriptions = Subscription::where('user_id', $user->id);
+        return view('claims', ['claims' => $subscriptions]);
     }
     public function create(Request $req)
     {
@@ -23,10 +24,10 @@ class ClaimController extends Controller
             'diagnosis' => $req->diagnosis,
             'hospitalizeDate' => $req->hospitalizeDate,
             'hospitalizeduration' => $req->hospitalizeduration,
-            'medcareName' => $req->medcareName,
-            'claimType' => $req->claimType
+            'medcareName' => $req->medcareName
+            // 'claimType' => $req->claimType
         ]);
-        return redirect(route('claims.home'));
+        return redirect(route('user.profile'));
     }
     public function delete(Request $req, $id)
     {
@@ -40,7 +41,12 @@ class ClaimController extends Controller
         if ($claim) {
             $claim->status = $req->status;
             $claim->note = $req->note;
-            $claim->amount = $req->amount;
+            $claim->coverage = $req->coverage;
+            $claim->claimantName = $req->claimantName;
+            $claim->diagnosis = $req->diagnosis;
+            $claim->hospitalizeDate = $req->hospitalizeDate;
+            $claim->hospitalizeduration = $req->hospitalizeduration;
+            $claim->medcareName = $req->medcareName;
             $claim->save();
         }
         return redirect(route('claims.home'));

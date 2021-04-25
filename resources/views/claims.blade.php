@@ -18,38 +18,38 @@
   <div class="card">
     <div class="card-body p-md-5">
       <h5 class="mb-3">Form Klaim Rawat Inap</h5>
-      <form action="#" method="POST">
+      <form action="{{route('claim.create')}}" method="POST">
         <div class="row">
           <div class="col-12 col-md-6">
             <div class="mb-3">
               <label for="policy" class="form-label">Polis Asuransi</label>
               <select class="form-select" aria-label="Polis Asuransi" id="policy" name="policy">
                 <option selected>Pilih Polis</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                @foreach($subscriptions as $subscription)
+                <option value="{{$subscription->id}}">{{$subscription->policy_name}}</option>
+                @endforeach
               </select>
             </div>
             <div class="mb-3">
-              <label for="fullName" class="form-label">Nama Pasien</label>
-              <input type="text" class="form-control" id="fullName" name="fullName">
+              <label for="claimantName" class="form-label">Nama Pasien</label>
+              <input type="text" class="form-control" id="claimantName" name="claimantName">
             </div>
             <div class="mb-3">
               <label for="diagnosis" class="form-label">Diagnosis</label>
               <textarea rows="3" class="form-control" id="diagnosis" name="diagnosis"></textarea>
             </div>
             <div class="mb-3">
-              <label for="date" class="form-label">Tanggal Perawatan</label>
-              <input type="date" class="form-control" id="date">
+              <label for="hospitalizeDate" class="form-label">Tanggal Perawatan</label>
+              <input type="date" class="form-control" id="hospitalizeDate" name="hospitalizeDate">
             </div>
             <div class="mb-3">
-              <label for="date" class="form-label">Lama Perawatan</label>
-              <input type="number" class="form-control" id="duration">
+              <label for="hospitalizeDate" class="form-label">Lama Perawatan</label>
+              <input type="number" class="form-control" id="hospitalizeDuration" name="hospitalizeDuration">
             </div>
 
             <div class="mb-3">
-              <label for="medcare" class="form-label">Nama Rumah Sakit</label>
-              <input type="text" class="form-control" id="medcare" name="medcare">
+              <label for="medcareName" class="form-label">Nama Rumah Sakit</label>
+              <input type="text" class="form-control" id="medcareName" name="medcareName">
             </div>
 
           </div>
