@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
@@ -16,20 +17,14 @@ class SubscriptionTest extends DuskTestCase
     public function testExample()
     {
         $this->browse(function (Browser $browser) {
-            $rand = time();
-            $name = $rand;
-            $email = $rand . "@gmail.com";
-            $password = "12345678";
-
-            $browser->visit('/register')
-                ->type('name', $name)
-                ->type('email', $email)
-                ->type('password', $password)
-                ->press('Register');
-            $browser->visit('/login')
-                ->type('email', $email)
-                ->type('password', $password)
-                ->press('Login');
+            $browser->loginAs(User::find(1))
+                ->visitRoute('subscription', ['id' => '1'])
+                ->radio('gender', 'L')
+                ->type('fullName', 'GHF')
+                ->type('birthdate', '04/24/1999')
+                ->type('phone', '088177552')
+                ->type('address', 'Bandung')
+                ->press('Submit');
         });
     }
 }
