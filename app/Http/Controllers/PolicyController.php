@@ -15,12 +15,17 @@ class PolicyController extends Controller
     }
     public function create(Request $req)
     {
+        $file = $req->file('img');
+        $destinationPath = 'uploads';
+        $filename = $file->getClientOriginalName() . '_'  . time() . '.' . $file->getClientOriginalExtension();
+        $file->move($destinationPath, $filename);
+
         Policy::create([
             'name' => $req->name,
             'desc' => $req->desc,
             'tags' => $req->tags,
             'type' => 0,
-            'img' => '',
+            'img' => $filename,
             'premium' => $req->premium,
             'claimType' => $req->kategori
         ]);
@@ -39,7 +44,7 @@ class PolicyController extends Controller
             $policy->name = $req->name;
             $policy->desc = $req->desc;
             $policy->tags = $req->tags;
-            $policy->img ='';
+            $policy->img = '';
             $policy->premium = $req->premium;
             $policy->claimType = $req->kategori;
             $policy->save();

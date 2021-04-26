@@ -7,7 +7,7 @@
   <div class="card">
     <div class="card-body p-md-5">
       <h5 class="mb-3">Form Klaim Rawat Inap</h5>
-      <form action="{{route('claim.create')}}" method="POST">
+      <form action="{{route('claim.create')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="claimType" value="{{ $subscription->claimType }}">
         <div class="row">
@@ -47,7 +47,7 @@
           <div class="col-12 col-md-6">
             <div class="mb-3">
               <label for="formFile" class="form-label">Surat Keterangan Rawat Inap</label>
-              <input class="form-control" type="file" id="formFile">
+              <input class="form-control" type="file" id="formFile" name="dokumen">
             </div>
             <div class="mb-3 form-check">
               <input class="form-check-input" type="checkbox" id="flexCheckDefault">

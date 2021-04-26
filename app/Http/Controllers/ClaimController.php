@@ -21,6 +21,11 @@ class ClaimController extends Controller
     }
     public function create(Request $req)
     {
+        $file = $req->file('img');
+        $destinationPath = 'dokumen';
+        $filename = $file->getClientOriginalName() . '_'  . time() . '.' . $file->getClientOriginalExtension();
+        $file->move($destinationPath, $filename);
+
         Claim::create([
             'status' => "pending",
             'note' => $req->note,
@@ -29,8 +34,9 @@ class ClaimController extends Controller
             'diagnosis' => $req->diagnosis,
             'hospitalizeDate' => $req->hospitalizeDate,
             'hospitalizeduration' => $req->hospitalizeduration,
-            'medcareName' => $req->medcareName
-            // 'claimType' => $req->claimType
+            'medcareName' => $req->medcareName,
+            'dokumen' => $req->filename,
+            'claimType' => $req->claimType
         ]);
         return redirect(route('user.profile'));
     }

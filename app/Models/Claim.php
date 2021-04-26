@@ -17,7 +17,8 @@ class Claim extends Model
         'hospitalizeDate',
         'hospitalizeduration',
         'medcareName',
-        'claimType'
+        'claimType',
+        'dokumen'
     ];
     public function customer()
     {

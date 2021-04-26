@@ -25,6 +25,7 @@ class CreateClaimsTable extends Migration
             $table->integer("hospitalizeDuration");
             $table->string("medcareName");
             $table->string("claimType");
+            $table->string("dokumen");
             $table->foreignId("subscription_id");
             $table->foreignId("customer_id");
             $table->foreignId("policy_id");
