@@ -13,41 +13,40 @@ class AuthTest extends DuskTestCase
      * @group auth
      * @return void
      */
-
-    public function login()
+    public function testWrongPassword()
     {
         $this->browse(function (Browser $browser) {
-            $email = "ghufronfr@gmail.com";
+            $wrongEmail = 'hello@gmail.com';
+            $wrongPassword = '283823828';
+            $browser->visit('/login')
+                ->type('email', $wrongEmail)
+                ->type('password', $wrongPassword)
+                ->press('Login')
+                ->assertSeeAnythingIn('.alert-danger');
+        });
+    }
+    public function testAuth()
+    {
+
+        $this->browse(function (Browser $browser) {
+            $rand = time();
+            $name = $rand;
+            $email = $rand . "@gmail.com";
             $password = "12345678";
+
+            $browser->visit('/register')
+                ->type('name', $name)
+                ->type('email', $email)
+                ->type('password', $password)
+                ->press('Register')
+                ->assertPathIs('/login');
             $browser->visit('/login')
                 ->type('email', $email)
                 ->type('password', $password)
-                ->press('Login');
-            $browser->visit('/profile');
-        });
-    }
-
-
-    /**
-     * A Dusk test example.
-     *
-     * @group auth
-     * @return void
-     */
-    public function register()
-    {
-
-        $this->browse(function (Browser $browser) {
-            $fullName = "Ghufron";
-            $email = "ghufronfr@gmail.com";
-            $password = "12345678";
-            $browser->visit('/register')
-                ->type('fullName', $fullName)
-                ->type('email', $email)
-                ->type('password', $password)
                 ->press('Login')
-                ->assertPathIs('/login');
-            // ->assertSee();
+                ->visit('/profile')
+                ->assertSee($name)
+                ->assertSee($email);
         });
     }
 }
