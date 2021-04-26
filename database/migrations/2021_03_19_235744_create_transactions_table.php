@@ -19,8 +19,9 @@ class CreateTransactionsTable extends Migration
             $table->integer('amount');
             $table->string('status');
             $table->string('paymentMethod');
+            $table->string('customerName');
             $table->foreignId('policy_id');
-            $table->foreignId('user_id');
+            $table->foreignId('customer_id');
         });
     }
 

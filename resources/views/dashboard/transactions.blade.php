@@ -19,23 +19,25 @@
       </tr>
     </thead>
     <tbody>
+      @foreach($transactions as $transaction)
       <tr>
-        <td>1</td>
-        <td>02/02/2021</td>
-        <td>Ghufron Fikri</td>
-        <td>Rp. 429.873</td>
+        <td>{{ $transaction->id }}</td>
+        <td>{{ $transaction->updated_at }}</td>
+        <td>{{ $transaction->customerName }}</td>
+        <td>Rp. {{ $transaction->amount }}</td>
         <td>
-          <span class="badge bg-success">
-            Completed
+          <span class="badge {{ $transaction->status == 'paid' ? 'bg-success' : 'bg-warning' }}">
+            {{ $transaction->status }}
           </span>
         </td>
         <td>
-          Wire Transfer
+          {{ $transaction->paymentMethod }}
         </td>
         <td>
           <a href="{{  route('dashboard.transactions.detail', ['id' => 1]) }}" class="btn btn-light">Detail</a>
         </td>
       </tr>
+      @endforeach
     </tbody>
   </table>
   <!-- @foreach($transactions as $transaction)

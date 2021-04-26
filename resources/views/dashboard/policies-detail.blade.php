@@ -6,7 +6,7 @@
 <div class="p-4">
 	<div class="card">
 		<div class="p-5 card-body">
-			<form action="{{ $policy ? route('policy.update', ['id' => $policy->id]) : route('policy.create') }}" method="POST">
+			<form action="{{ $policy ? route('policy.update', ['id' => $policy->id]) : route('policy.create') }}" method="POST" enctype="multipart/form-data">
 				@csrf
 				<div style="max-width: 600px" class="mx-auto">
 
@@ -23,21 +23,24 @@
 						<input type="text" name="tags" id="tags" value="{{ $policy ? $policy->tags : '' }}" class="form-control">
 					</div>
 
-					<label for="kategori" class="form-label">Kategori</label>
-					<select class="form-control" name="kategori" id="kategori">
+					<div class="mb-4">
+
+						<label for="kategori" class="form-label">Kategori</label>
+						<select class="form-control" name="kategori" id="kategori">
 							<option value="Kesehatan">Kesehatan</option>
 							<option value="Kematian">Kematian</option>
 						</select>
+					</div>
 
-						<div class="mb-4">
-						<label for="premium" class="form-label">premium</label>
+					<div class="mb-4">
+						<label for="premium" class="form-label">Premium</label>
 						<input type="number" name="premium" id="premium" value="{{ $policy ? $policy->premium : '' }}" class="form-control">
 					</div>
-					
+
 					<div class="mb-3">
-              <label for="formFile" class="form-label">Image</label>
-              <input class="form-control" name="img" type="file" id="formFile">
-            </div>
+						<label for="formFile" class="form-label">Image</label>
+						<input class="form-control" name="img" type="file" id="formFile">
+					</div>
 
 					<div class="text-end">
 						<button type="submit" class="btn btn-warning">Submit</button>

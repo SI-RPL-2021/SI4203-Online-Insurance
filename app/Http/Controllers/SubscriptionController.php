@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Policy;
 use Illuminate\Http\Request;
 use App\Models\Subscription;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 
 class SubscriptionController extends Controller
@@ -60,6 +61,17 @@ class SubscriptionController extends Controller
         $subscription = Subscription::find($id);
 
         if ($subscription) {
+            if ($subscription->status == 'pending' && $req->status == 'active') {
+                Transaction::create([
+                    'status' => "pending",
+                    'amount' => $req->premium,
+                    'customerName' => $subscription->fullName,
+                    'paymentDate' => "",
+                    'paymentMethod' => "",
+                    'customer_id' => $subscription->customer_id,
+                    'subscription_id' => $subscription->id
+                ]);
+            }
             // $subscription->startDate = $req->date;
             // $subscription->endDate = $req->enddate;
             $subscription->status = $req->status;
