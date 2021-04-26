@@ -18,7 +18,14 @@ class PolicyTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
-                ->visit('/');
+                ->visitRoute('dashboard.policies.detail', ['id' => 0])
+                ->type('name', 'Polis Test')
+                ->type('desc', 'This is some desc')
+                ->type('tags', 'Health Insurance')
+                ->select('kategori', 'kesehatan')
+                ->type('premium', 100000)
+                ->attach('img', __DIR__ . '/uploads/bgang')
+                ->press('Submit');
         });
     }
 }

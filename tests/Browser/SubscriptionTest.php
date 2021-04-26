@@ -18,7 +18,13 @@ class SubscriptionTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->loginAs(User::find(1))
-                ->visit('/');
+                ->visitRoute('subscription', ['id' => '1'])
+                ->radio('gender', 'L')
+                ->type('fullName', 'GHF')
+                ->type('birthdate', '04/24/1999')
+                ->type('phone', '088177552')
+                ->type('address', 'Bandung')
+                ->press('Submit');
         });
     }
 }
