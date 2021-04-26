@@ -34,13 +34,13 @@ class AuthTest extends DuskTestCase
             $email = $rand . "@gmail.com";
             $password = "12345678";
 
-
             $browser->visit('/register')
                 ->type('name', $name)
                 ->type('email', $email)
                 ->type('password', $password)
                 ->press('Register')
-                ->assertPathIs('/login')
+                ->assertPathIs('/login');
+            $browser->visit('/login')
                 ->type('email', $email)
                 ->type('password', $password)
                 ->press('Login')
