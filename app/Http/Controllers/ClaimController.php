@@ -21,22 +21,27 @@ class ClaimController extends Controller
     }
     public function create(Request $req)
     {
-        $file = $req->file('img');
+        $file = $req->file('dokumen');
         $destinationPath = 'dokumen';
-        $filename = $file->getClientOriginalName() . '_'  . time() . '.' . $file->getClientOriginalExtension();
+        $filename = Auth::user()->id . '_'  . time() . '.' . $file->getClientOriginalExtension();
         $file->move($destinationPath, $filename);
+
+        $subscription = Subscription::find($req->subscription_id);
 
         Claim::create([
             'status' => "pending",
-            'note' => $req->note,
+            // 'note' => $req->note,
             'coverage' => 0,
             'claimantName' => $req->claimantName,
             'diagnosis' => $req->diagnosis,
             'hospitalizeDate' => $req->hospitalizeDate,
-            'hospitalizeduration' => $req->hospitalizeduration,
+            'hospitalizeDuration' => $req->hospitalizeDuration,
             'medcareName' => $req->medcareName,
-            'dokumen' => $req->filename,
-            'claimType' => $req->claimType
+            'dokumen' => $filename,
+            'claimType' => 'Rawat Inap',
+            'subscription_id' => $req->subscription_id,
+            'customer_id' => Auth::user()->id,
+            'policy_id' => $subscription->policy_id
         ]);
         return redirect(route('user.profile'));
     }

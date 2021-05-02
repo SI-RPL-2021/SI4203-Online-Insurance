@@ -15,7 +15,9 @@ class Transaction extends Model
         'customerName',
         'paymentDate',
         'paymentMethod',
-        'customer_id'
+        'customer_id',
+        'policy_id',
+        'subscription_id'
     ];
 
     public function subscription()

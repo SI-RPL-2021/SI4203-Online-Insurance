@@ -17,7 +17,7 @@ class PolicyController extends Controller
     {
         $file = $req->file('img');
         $destinationPath = 'uploads';
-        $filename = $file->getClientOriginalName() . '_'  . time() . '.' . $file->getClientOriginalExtension();
+        $filename = time() . '.' . $file->getClientOriginalExtension();
         $file->move($destinationPath, $filename);
 
         Policy::create([
@@ -40,11 +40,19 @@ class PolicyController extends Controller
     {
         $policy = Policy::find($id);
 
+        $file = $req->file('img');
+        $filename = $policy->filename;
+        if ($file) {
+            $destinationPath = 'uploads';
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move($destinationPath, $filename);
+        }
+
         if ($policy) {
             $policy->name = $req->name;
             $policy->desc = $req->desc;
             $policy->tags = $req->tags;
-            $policy->img = '';
+            $policy->img = $filename;
             $policy->premium = $req->premium;
             $policy->claimType = $req->kategori;
             $policy->save();

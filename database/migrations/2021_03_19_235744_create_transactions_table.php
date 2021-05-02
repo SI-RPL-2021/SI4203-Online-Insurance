@@ -18,10 +18,12 @@ class CreateTransactionsTable extends Migration
             $table->timestamps();
             $table->integer('amount');
             $table->string('status');
-            $table->string('paymentMethod');
+            $table->string('paymentMethod')->nullable(true);
+            $table->date('paymentDate')->nullable(true);
             $table->string('customerName');
             $table->foreignId('policy_id');
             $table->foreignId('customer_id');
+            $table->foreignId('subscription_id');
         });
     }
 

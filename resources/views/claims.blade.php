@@ -9,13 +9,12 @@
       <h5 class="mb-3">Form Klaim Rawat Inap</h5>
       <form action="{{route('claim.create')}}" method="POST" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="claimType" value="{{ $subscription->claimType }}">
         <div class="row">
           <div class="col-12 col-md-6">
             <div class="mb-3">
-              <label for="policy" class="form-label">Polis Asuransi</label>
-              <select class="form-select" aria-label="Polis Asuransi" id="policy" name="policy">
-                <option selected>Pilih Polis</option>
+              <label for="subscription" class="form-label">Polis Asuransi</label>
+              <select class="form-select" aria-label="Polis Asuransi" id="subscription" name="subscription_id">
+                <option>Pilih Polis</option>
                 @foreach($subscriptions as $subscription)
                 <option value="{{$subscription->id}}">{{$subscription->policy_name}}</option>
                 @endforeach
@@ -34,7 +33,7 @@
               <input type="date" class="form-control" id="hospitalizeDate" name="hospitalizeDate">
             </div>
             <div class="mb-3">
-              <label for="hospitalizeDate" class="form-label">Lama Perawatan</label>
+              <label for="hospitalizeDuration" class="form-label">Lama Perawatan</label>
               <input type="number" class="form-control" id="hospitalizeDuration" name="hospitalizeDuration">
             </div>
 
