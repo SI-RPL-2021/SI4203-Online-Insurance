@@ -17,7 +17,7 @@ class CreateClaimsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string("status");
-            $table->string("note");
+            // $table->string("note");
             $table->integer("coverage");
             $table->string("claimantName");
             $table->string("diagnosis");

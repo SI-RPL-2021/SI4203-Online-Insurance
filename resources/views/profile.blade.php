@@ -47,15 +47,16 @@
           </tr>
         </thead>
         <tbody>
+          @foreach($transactions as $transaction)
           <tr>
-            <td>Jiwasraya</td>
-            <td>Rp. 100.000</td>
+            <td>{{ $transaction->policy_name }}</td>
+            <td>{{ $transaction->amount }}</td>
             <td>
-              <span class="badge bg-success">Lunas</span>
+              <span class="badge bg-success">{{ $transaction->status }}</span>
             </td>
-            <td>24/04/2021</td>
-
+            <td>{{ $transaction->created_at }}</td>
           </tr>
+          @endforeach
         </tbody>
       </table>
     </div>

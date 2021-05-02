@@ -10,15 +10,18 @@ class Claim extends Model
     use HasFactory;
     protected $fillable = [
         'status',
-        'note',
+        // 'note',
         'coverage',
         'claimantName',
         'diagnosis',
         'hospitalizeDate',
-        'hospitalizeduration',
+        'hospitalizeDuration',
         'medcareName',
         'claimType',
-        'dokumen'
+        'dokumen',
+        'subscription_id',
+        'customer_id',
+        'policy_id'
     ];
     public function customer()
     {

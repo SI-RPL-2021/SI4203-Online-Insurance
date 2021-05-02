@@ -61,27 +61,36 @@ class SubscriptionController extends Controller
         $subscription = Subscription::find($id);
 
         if ($subscription) {
-            if ($subscription->status == 'pending' && $req->status == 'active') {
-                Transaction::create([
-                    'status' => "pending",
-                    'amount' => $req->premium,
-                    'customerName' => $subscription->fullName,
-                    'paymentDate' => "",
-                    'paymentMethod' => "",
-                    'customer_id' => $subscription->customer_id,
-                    'subscription_id' => $subscription->id
-                ]);
+            if ($req->status == 'active') {
+                $transaction = Transaction::find($subscription->subscription_id);
+
+                if (!$transaction) {
+                    Transaction::create([
+                        'status' => "pending",
+                        'amount' => $req->premium,
+                        'customerName' => $subscription->fullName,
+                        // 'paymentDate' => "",
+                        // 'paymentMethod' => "",
+                        'customer_id' => $subscription->customer_id,
+                        'subscription_id' => $subscription->id,
+                        'policy_id' => $subscription->policy_id
+                    ]);
+                }
+                $subscription->status = $req->status;
+            } else if ($req->status == 'rejected') {
+                $subscription->status = $req->status;
+            } else {
+                $subscription->status = $req->status;
             }
             // $subscription->startDate = $req->date;
             // $subscription->endDate = $req->enddate;
-            $subscription->status = $req->status;
             // $subscription->fullName = $req->fullName;
             // $subscription->birthdate = $req->birthdate;
             // $subscription->phone = $req->phone;
             // $subscription->address = $req->address;
             // $subscription->gender = $req->gender;
-            $subscription->maxCoverage = $req->maxCoverage;
-            $subscription->premium = $req->premium;
+            // $subscription->maxCoverage = $req->maxCoverage;
+            // $subscription->premium = $req->premium;
             // $subscription->policy_id = $policy->id;
             // $subscription->policy_name = $policy->name;
             // $subscription->customer_id = $userId;
