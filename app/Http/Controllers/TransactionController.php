@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subscription;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,8 @@ class TransactionController extends Controller
     {
 
         $transaction = Transaction::find($id);
-        return view('transactions', ['transaction' => $transaction]);
+        $subscription = Subscription::find($transaction->subscription_id);
+        return view('transactions-detail', ['transaction' => $transaction, 'subscription' => $subscription]);
     }
     public function create(Request $req)
     {
@@ -30,17 +32,24 @@ class TransactionController extends Controller
     public function delete(Request $req, $id)
     {
         Transaction::destroy($id);
-        return redirect(route('transactions.home'));
+        return redirect(route('dashboard.transactions'));
     }
     public function update(Request $req, $id)
     {
         $transaction = Transaction::find($id);
-
         if ($transaction) {
-            $transaction->status = $req->status;
-            $transaction->amount = $req->amount;
+            $subscription = Subscription::find($transaction->subscription_id);
+            $transaction->status = 'paid';
             $transaction->save();
+
+            if ($subscription) {
+                $subscription->endDate = date('Y-m-d', strtotime($subscription->endDate . '+ 30 days'));
+                $subscription->status = 'active';
+                // $transaction->amount = $req->amount;
+                $transaction->paymentDate = date('Y-m-d');
+                $subscription->save();
+            }
         }
-        return redirect(route('transactions.home'));
+        return redirect(route('user.profile'));
     }
 }
