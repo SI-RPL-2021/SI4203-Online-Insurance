@@ -1,9 +1,8 @@
 <nav class="text-white border-right position-relative w-100" id="sidebar-wrapper">
   <div class="top-0 left-0 shadow position-fixed h-100 w-100 bg-warning" style="max-width: 15rem">
-    <div class="py-3 text-center sidebar-heading">
-
+    <a href="/" class="py-3 text-center text-white d-block sidebar-heading">
       <span class="fw-bold">LIFE</span> Insurance +
-    </div>
+    </a>
     <hr class="mt-0">
     <ul class="nav flex-column">
       <li class="mb-2 nav-item">

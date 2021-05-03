@@ -54,7 +54,7 @@ class SubscriptionController extends Controller
     public function delete(Request $req, $id)
     {
         Subscription::destroy($id);
-        return redirect(route('subscriptions.home'));
+        return redirect(route('dashboard.subscriptions'));
     }
     public function update(Request $req, $id)
     {
@@ -65,10 +65,13 @@ class SubscriptionController extends Controller
                 $transaction = Transaction::find($subscription->subscription_id);
 
                 if (!$transaction) {
+                    $startDate = date("Y-m-d");
                     Transaction::create([
                         'status' => "pending",
                         'amount' => $req->premium,
                         'customerName' => $subscription->fullName,
+                        'startDate' => $startDate,
+                        'endDate' => date("Y-m-d", strtotime($startDate . ' + 30 days')),
                         // 'paymentDate' => "",
                         // 'paymentMethod' => "",
                         'customer_id' => $subscription->customer_id,

@@ -13,7 +13,7 @@
       </div>
       <hr>
       <h5>Polis Asuransi</h5>
-      <table class="table">
+      <table class="table mb-4">
         <thead>
           <tr>
             <th>Polis</th>
@@ -40,21 +40,26 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Polis</th>
+            <!-- <th>Polis</th> -->
             <th>Jumlah</th>
             <th>Status</th>
             <th>Jatuh Tempo</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           @foreach($transactions as $transaction)
           <tr>
-            <td>{{ $transaction->policy_name }}</td>
+            <!-- <td>{{ $transaction->policy_name }}</td> -->
             <td>{{ $transaction->amount }}</td>
             <td>
               <span class="badge bg-success">{{ $transaction->status }}</span>
             </td>
             <td>{{ $transaction->created_at }}</td>
+            <td>
+              <a href="{{ route('transaction.detail', $transaction->id) }}" class="btn btn-sm btn-light">Bayar</a>
+            </td>
+
           </tr>
           @endforeach
         </tbody>
