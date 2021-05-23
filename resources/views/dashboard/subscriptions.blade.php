@@ -28,7 +28,7 @@
           {{$subscription->birthdate}}
         </td>
         <td>
-          {{$subscription->address}}
+          {{$subscription->Address}}
         </td>
         <td>
           <a href="{{route('dashboard.subscriptions.detail', ['id' => $subscription->id])}}" class="btn btn-sm btn-light">
@@ -54,7 +54,7 @@
           <th>Phone</th>
           <th>Gender</th>
           <th>Birthdate</th>
-          <th>Address</th>
+          <th>jatuh tempo</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -69,7 +69,7 @@
             {{$subscription->birthdate}}
           </td>
           <td>
-            {{$subscription->address}}
+            {{$subscription->endDate}}
           </td>
           <td>
             <a href="{{route('dashboard.subscriptions.detail', ['id' => $subscription->id])}}" class="btn btn-sm btn-light">

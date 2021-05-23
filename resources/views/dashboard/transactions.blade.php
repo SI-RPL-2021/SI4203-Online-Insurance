@@ -9,7 +9,7 @@
     <thead>
       <tr>
         <th>No</th>
-        <th>Payment Date</th>
+        <th>Payment date</th>
         <th>Cust. Name</th>
         <th>Amount</th>
         <th>Status</th>
@@ -22,7 +22,11 @@
       @foreach($transactions as $transaction)
       <tr>
         <td>{{ $transaction->id }}</td>
+        @if ($transaction->status == 'paid')
         <td>{{ $transaction->updated_at }}</td>
+        @else 
+        <td></td>
+        @endif
         <td>{{ $transaction->customerName }}</td>
         <td>Rp. {{ $transaction->amount }}</td>
         <td>
