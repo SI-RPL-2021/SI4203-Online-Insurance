@@ -23,17 +23,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          
             @foreach($subscriptions as $subscription)
+            <tr>
             <td>{{ $subscription->policy_name }}</td>
             <td>{{ $subscription->premium }}</td>
             <td>
               <span class="badge bg-success">{{ $subscription->status }}</span>
             </td>
             <td>{{ $subscription->created_at }}</td>
-            @endforeach
+            
 
           </tr>
+          @endforeach
         </tbody>
       </table>
       <h5>Tagihan</h5>
@@ -43,7 +45,7 @@
             <!-- <th>Polis</th> -->
             <th>Jumlah</th>
             <th>Status</th>
-            <th>Jatuh Tempo</th>
+            <th>Payment date</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -55,9 +57,15 @@
             <td>
               <span class="badge bg-success">{{ $transaction->status }}</span>
             </td>
-            <td>{{ $transaction->created_at }}</td>
+            @if ($transaction->status == 'paid')
+        <td>{{ $transaction->updated_at }}</td>
+        @else 
+        <td></td>
+        @endif
             <td>
+            @if ($transaction->status !='paid')
               <a href="{{ route('transaction.detail', $transaction->id) }}" class="btn btn-sm btn-light">Bayar</a>
+              @endif
             </td>
 
           </tr>

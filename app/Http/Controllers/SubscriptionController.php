@@ -66,6 +66,7 @@ class SubscriptionController extends Controller
 
                 if (!$transaction) {
                     $startDate = date("Y-m-d");
+                    $subscription->startDate = date("Y-m-d", strtotime($startDate . ' + 5 days'));
                     Transaction::create([
                         'status' => "pending",
                         'amount' => $req->premium,
