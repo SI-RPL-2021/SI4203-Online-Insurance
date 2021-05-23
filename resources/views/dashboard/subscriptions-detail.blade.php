@@ -36,16 +36,16 @@
 
 					<div class="mb-4">
 						<label for="maxCoverage" class="form-label">Max Coverage</label>
-						<input type="number" name="maxCoverage" id="maxCoverage" class="form-control">
+						<input type="number" name="maxCoverage" id="maxCoverage" class="form-control" value="{{$subscription->maxCoverage}}">
 					</div>
 					<div class="mb-4">
 						<label for="premium" class="form-label">Premium</label>
-						<input type="number" name="premium" id="premium" class="form-control">
+						<input type="number" name="premium" id="premium" class="form-control" value="{{$subscription->premium}}">
 					</div>
 					<div class="mb-4">
 						<label for="status" class="form-label">Status</label>
 
-						<select class="form-control" name="status" id="status">
+						<select class="form-control" name="status" id="status" value="{{$subscription->status}}">
 							<option value="pending">Pending</option>
 							<option value="active">Active</option>
 							<option value="rejected">Rejected</option>

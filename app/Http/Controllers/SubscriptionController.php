@@ -80,10 +80,14 @@ class SubscriptionController extends Controller
                     ]);
                 }
                 $subscription->status = $req->status;
+                $subscription->premium = $req->premium;
+                $subscription->maxCoverage = $req->maxCoverage;
             } else if ($req->status == 'rejected') {
                 $subscription->status = $req->status;
             } else {
                 $subscription->status = $req->status;
+                $subscription->premium = $req->premium;
+                $subscription->maxCoverage = $req->maxCoverage;
             }
             // $subscription->startDate = $req->date;
             // $subscription->endDate = $req->enddate;
