@@ -47,3 +47,5 @@
     </div>
   </form>
 </div>
+
+@endsection
