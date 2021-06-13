@@ -10,23 +10,31 @@ use Illuminate\Support\Facades\Auth;
 
 class SubscriptionController extends Controller
 {
-    public function home()
+
+    // Customer-only
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Subscription  $subscription
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Subscription $subcription)
     {
-        $subscriptions = Subscription::all();
-        return view('subscriptions', ['subscriptions' => $subscriptions]);
+        return view('pages.subscriptions.detail', ['subscription' => $subcription]);
     }
 
-    public function checkout(Request $req, $id)
-    {
-        $policy = Policy::find($id);
 
-        return view('checkout', ['policy' => $policy]);
-    }
-    public function detail(Request $req, $id)
+    // Admin-only
+
+    public function index()
     {
-        $policy = Policy::find($id);
-        return view('subscriptions-detail', ['policy' => $policy]);
+        $subscriptionsPending = Subscription::where('status', 'pending')->get();
+        $subscriptionsActive = Subscription::where('status', 'active')->get();
+        $subscriptionsRejected = Subscription::where('status', 'rejected')->get();
+        return view('dashboard.subscriptions.index', ['subscriptionsRejected' => $subscriptionsRejected, 'subscriptionsPending' => $subscriptionsPending, 'subscriptionsActive' => $subscriptionsActive]);
     }
+
     public function create(Request $req)
     {
         $policy = Policy::find($req->policyId);
@@ -49,13 +57,21 @@ class SubscriptionController extends Controller
             'customer_id' => $userId
         ]);
 
-        return redirect(route('user.profile'));
+        return redirect()->route('pages.profile');
     }
-    public function delete(Request $req, $id)
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Subscription  $subcription
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Subscription $subcription, $id)
     {
         Subscription::destroy($id);
-        return redirect(route('dashboard.subscriptions'));
+        return redirect()->route('dashboard.subscriptions.index');
     }
+
     public function update(Request $req, $id)
     {
         $subscription = Subscription::find($id);
@@ -90,21 +106,9 @@ class SubscriptionController extends Controller
                 $subscription->premium = $req->premium;
                 $subscription->maxCoverage = $req->maxCoverage;
             }
-            // $subscription->startDate = $req->date;
-            // $subscription->endDate = $req->enddate;
-            // $subscription->fullName = $req->fullName;
-            // $subscription->birthdate = $req->birthdate;
-            // $subscription->phone = $req->phone;
-            // $subscription->address = $req->address;
-            // $subscription->gender = $req->gender;
-            // $subscription->maxCoverage = $req->maxCoverage;
-            // $subscription->premium = $req->premium;
-            // $subscription->policy_id = $policy->id;
-            // $subscription->policy_name = $policy->name;
-            // $subscription->customer_id = $userId;
             $subscription->save();
         }
 
-        return redirect(route('dashboard.subscriptions'));
+        return redirect()->route('dashboard.subscriptions.index');
     }
 }

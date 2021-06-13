@@ -22,10 +22,11 @@ class Transaction extends Model
 
     public function subscription()
     {
-        return $this->hasOne(Subscription::class);
+        return $this->belongsTo(Subscription::class);
     }
+
     public function customer()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }

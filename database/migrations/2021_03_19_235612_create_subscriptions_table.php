@@ -15,7 +15,6 @@ class CreateSubscriptionsTable extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('status');
             $table->date('startDate')->nullable(true);
             $table->date('endDate')->nullable(true);
@@ -30,8 +29,9 @@ class CreateSubscriptionsTable extends Migration
             $table->string('address');
             $table->string('claimType');
 
-            $table->foreignId('policy_id');
-            $table->foreignId('customer_id');
+            $table->foreignId('policy_id')->constrained('policies');
+            $table->foreignId('customer_id')->constrained('users');
+            $table->timestamps();
         });
     }
 

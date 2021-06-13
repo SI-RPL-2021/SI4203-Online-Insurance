@@ -14,17 +14,17 @@
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="mb-2 navbar-nav me-auto mb-lg-0 font-weight-bold">
         <li class="nav-item">
-          <a class="nav-link fw-bold" aria-current="page" href="{{ route('policy.home') }}">Products</a>
+          <a class="nav-link fw-bold" aria-current="page" href="{{ route('pages.policies.list') }}">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fw-bold" aria-current="page" href="{{ route('claim.home') }}">Claim</a>
+          <a class="nav-link fw-bold" aria-current="page" href="{{ route('pages.claims.create') }}">Claim</a>
         </li>
         <li class="nav-item">
           <a class="nav-link fw-bold" aria-current="page" href="#">Support</a>
         </li>
       </ul>
       <div>
-        <!-- <a href="{{ route('dashboard.home') }}" class="px-4 btn btn-warning font-weight-bold">
+        <!-- <a href="{{ route('dashboard.index') }}" class="px-4 btn btn-warning font-weight-bold">
           Dashboard
         </a> -->
         @if(Auth::check())
@@ -40,11 +40,11 @@
           <ul class="border-0 shadow dropdown-menu dropdown-menu-end w-100" aria-labelledby="dropdown">
             @if(Auth::user()->role === 'admin')
             <li>
-              <a class="dropdown-item" href="{{route('dashboard.home')}}">Dashboard</a>
+              <a class="dropdown-item" href="{{route('dashboard.index')}}">Dashboard</a>
             </li>
             <li>
               @endif
-              <a class="dropdown-item" href="{{route('user.profile')}}">Profile</a>
+              <a class="dropdown-item" href="{{route('pages.profile')}}">Profile</a>
             </li>
 
             <div class="dropdown-divider"></div>
@@ -58,10 +58,10 @@
         @else
         <div>
 
-          <a href="{{ route('login') }}" class="px-4 btn d-inline-block btn-warning font-weight-bold">
+          <a href="{{ route('pages.login') }}" class="px-4 btn d-inline-block btn-warning font-weight-bold">
             Login
           </a>
-          <a href="{{ route('register') }}" class="px-4 btn d-inline-block d-inline btn-outline-warning font-weight-bold">
+          <a href="{{ route('pages.register') }}" class="px-4 btn d-inline-block d-inline btn-outline-warning font-weight-bold">
             Daftar
           </a>
         </div>

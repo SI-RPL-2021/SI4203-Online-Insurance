@@ -4,64 +4,143 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Policy;
+use Illuminate\Support\Facades\Storage;
 
 class PolicyController extends Controller
 {
 
-    public function home()
-    {
-        $Policies = Policy::all();
-        return view('policies', ['policies' => $Policies]);
+    // Customer-only
+
+    public function list() {
+        $policies = Policy::all();
+        return view('pages.policies.index', ['policies' => $policies]);
     }
-    public function create(Request $req)
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Policy  $policy
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Policy $policy)
     {
-        $file = $req->file('img');
+        return view('pages.policies.detail', ['policy' => $policy]);
+    }
+
+    // Admin-only
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $policies = Policy::all();
+        return view('dashboard.policies.index', ['policies' => $policies]);
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $file = $request->file('img');
         $destinationPath = 'uploads';
         $filename = time() . '.' . $file->getClientOriginalExtension();
         $file->move($destinationPath, $filename);
 
         Policy::create([
-            'name' => $req->name,
-            'desc' => $req->desc,
-            'tags' => $req->tags,
+            'name' => $request->name,
+            'desc' => $request->desc,
+            'tags' => $request->tags,
             'type' => 0,
             'img' => $filename,
-            'premium' => $req->premium,
-            'claimType' => $req->kategori
+            'premium' => $request->premium,
+            'claimType' => $request->kategori
         ]);
-        return redirect(route('dashboard.policies'));
+        return redirect()->route('dashboard.policies.index');
     }
-    public function delete(Request $req, $id)
-    {
-        Policy::destroy($id);
-        return redirect(route('dashboard.policies'));
-    }
-    public function update(Request $req, $id)
-    {
-        $policy = Policy::find($id);
 
-        $file = $req->file('img');
-        $filename = $policy->filename;
-        if ($file) {
-            $destinationPath = 'uploads';
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move($destinationPath, $filename);
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('dashboard.policies.create');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Policy  $policy
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Policy $policy)
+    {
+        return view('dashboard.policies.edit', ['policy' => $policy]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Policy  $policy
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Policy $policy)
+    {
+        Policy::destroy($policy->id);
+        return redirect()->route('dashboard.policies.index');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Policy  $kantor
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Policy $policy)
+    {
+        // $policy = Policy::find($id);
+
+        // var_dump($request->except(['img']));
+
+
+        if ($request->hasFile('img')) {
+            $file = $request->file('img');
+
+            $path = Storage::put($policy->id, $file, 'public');
+            $policy->img = $path;
         }
 
-        if ($policy) {
-            $policy->name = $req->name;
-            $policy->desc = $req->desc;
-            $policy->tags = $req->tags;
-            $policy->img = $filename;
-            $policy->premium = $req->premium;
-            $policy->claimType = $req->kategori;
-            $policy->save();
-        }
-        return redirect(route('dashboard.policies'));
-    }
-    public function detail(Request $req, $id)
-    {
-        $policy = Policy::find($id);
-        return view('policies-detail', ['policy' => $policy]);
+
+        $policy->update($request->except(['img']));
+
+        // $file = $request->file('img');
+        // if ($file) {
+        //     $destinationPath = 'uploads';
+        //     $filename = time() . '.' . $file->getClientOriginalExtension();
+        //     $file->move($destinationPath, $filename);
+        //     $policy->img = $filename;
+        // }
+
+        // if ($policy) {
+        //     $policy->name = $request->name;
+        //     $policy->desc = $request->desc;
+        //     $policy->tags = $request->tags;
+        //     $policy->premium = $request->premium;
+        //     $policy->claimType = $request->kategori;
+        //     $policy->save();
+        // }
+        return redirect()->route('dashboard.policies.index');
     }
 }

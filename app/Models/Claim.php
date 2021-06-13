@@ -10,7 +10,6 @@ class Claim extends Model
     use HasFactory;
     protected $fillable = [
         'status',
-        // 'note',
         'coverage',
         'claimantName',
         'diagnosis',
@@ -23,16 +22,19 @@ class Claim extends Model
         'customer_id',
         'policy_id'
     ];
+
     public function customer()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
+
     public function subscription()
     {
-        return $this->hasOne(Subscription::class);
+        return $this->belongsTo(Subscription::class);
     }
+
     public function policy()
     {
-        return $this->hasOne(Policy::class);
+        return $this->belongsTo(Policy::class);
     }
 }

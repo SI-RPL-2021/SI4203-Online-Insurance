@@ -16,12 +16,11 @@ class CreatePoliciesTable extends Migration
         Schema::create('policies', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->String('name');
-            $table->String('desc');
+            $table->string('name');
+            $table->string('desc');
             $table->integer('premium');
-            $table->String('type');
-            $table->String('img');
-            $table->String('tags');
+            $table->string('img');
+            $table->string('tags');
             $table->string('claimType');
         });
     }

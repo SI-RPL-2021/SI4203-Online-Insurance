@@ -15,15 +15,15 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->integer('amount');
             $table->string('status');
             $table->string('paymentMethod')->nullable(true);
             $table->date('paymentDate')->nullable(true);
             $table->string('customerName');
-            $table->foreignId('policy_id');
-            $table->foreignId('customer_id');
-            $table->foreignId('subscription_id');
+            $table->foreignId('policy_id')->constrained('policies');
+            $table->foreignId('customer_id')->constrained('users');
+            $table->foreignId('subscription_id')->constrained('subscriptions');
+            $table->timestamps();
         });
     }
 

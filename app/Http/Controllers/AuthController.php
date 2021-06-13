@@ -11,20 +11,14 @@ class AuthController extends Controller
 {
     public function login(Request $req)
     {
-        $credentials = $req->only('email', 'password');
-
+        $credentials = $req->only(['email', 'password']);
 
         if (Auth::attempt($credentials)) {
-            // if (!Auth::user()->verified) {
-            //     return back()->withErrors([
-            //         'verification' => 'Please wait until your verification process accepted',
-            //     ]);
-            // }
             $req->session()->regenerate();
             if (Auth::user()->role == 'admin') {
-                return redirect(route('dashboard.home'));
+                return redirect()->route('dashboard.index');
             } else {
-                return redirect(route('home'));
+                return redirect()->route('pages.index');
             }
         }
 
@@ -32,14 +26,15 @@ class AuthController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
+
     function register(Request $req)
     {
-        $credentials = $req->only('name', 'email');
+        $credentials = $req->only(['name', 'email']);
         $credentials['password'] = Hash::make($req->password);
         $usr = User::find(1);
 
         if ($usr) {
-            $credentials['role'] = 'staff';
+            $credentials['role'] = 'customer';
             $credentials['verified'] = true;
         } else {
             $credentials['role'] = 'admin';
@@ -56,14 +51,15 @@ class AuthController extends Controller
 
         User::create($credentials);
 
-        return redirect(route('login'));
+        return redirect()->route('pages.login');
     }
+
     function logout(Request $req)
     {
         Auth::logout();
         $req->session()->invalidate();
         $req->session()->regenerateToken();
 
-        return redirect(route('home'));
+        return redirect()->route('pages.home');
     }
 }
