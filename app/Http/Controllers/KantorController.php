@@ -10,6 +10,15 @@ class KantorController extends Controller
 
     // Customer-only
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list()
+    {
+        return view('pages.kantor.index');
+    }
 
 
     // Admin-only

@@ -6,7 +6,7 @@
 <div class="container p-4">
 	<div class="card">
 		<div class="p-5 card-body">
-			<form action="{{route('subscription.update', $subscription->id)}}" method="POST">
+			<form action="{{route('dashboard.subscriptions.update', $subscription->id)}}" method="POST">
 				@csrf
 				@method('put')
 				<div style="max-width: 600px" class="mx-auto">

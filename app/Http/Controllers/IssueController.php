@@ -27,7 +27,7 @@ class IssueController extends Controller
      */
     public function list()
     {
-        // TODO: Return view
+        return view('pages.issues.index');
     }
 
 

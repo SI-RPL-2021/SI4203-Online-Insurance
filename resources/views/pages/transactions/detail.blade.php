@@ -4,13 +4,14 @@
 @section('content')
 
 <div class="container py-5">
-  <form action="{{route('transaction.update', ['id' => $transaction->id])}}" method="POST">
+  <form action="{{route('pages.transactions.update', $transaction->id)}}" method="POST">
     @csrf
+    @method('put')
     <input type="hidden" name="payment" value="1">
-    <div class="row gx-5">
+    <div class="row gx-4">
       <div class="col-12 col-md-8">
         <div class="mb-4 shadow-sm card">
-          <div class="card-body p-md-5">
+          <div class="card-body p-md-4">
             <h5 class="mb-4">Detail Pembayaran</h5>
 
             <div class="mb-5 card">
@@ -39,8 +40,8 @@
         </div>
       </div>
       <div class="col-12 col-md-4">
-        <div class="mb-4 shadow-md card p-md-5">
-          <div class="card-body">
+        <div class="mb-4 shadow-md card">
+          <div class="card-body p-md-4">
             <h5>Total</h5>
             <ul class="mb-4 list-group list-group-flush">
               <li class="px-0 justify-content-between list-group-item d-flex">

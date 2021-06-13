@@ -12,7 +12,7 @@
             Get health plans for you and your family, for every age and stage
           </h1>
           <a href="{{ route('pages.policies.list') }}" class="shadow me-2 d-inline-block btn btn-warning">Buy Online</a>
-          <a href="{{ route('pages.claims.list') }}" class="shadow d-inline-block btn btn-warning">Make a Claim</a>
+          <a href="{{ route('pages.claims.create') }}" class="shadow d-inline-block btn btn-warning">Make a Claim</a>
         </div>
         <img class="img-responsive" style="max-height: 500px" src="/family1.svg" alt="">
         <!-- <div style="background-image: url('/family1.svg'); height: 500px; background-repeat: no-repeat; background-position: center; background-size: contain" class="w-100">

@@ -4,9 +4,9 @@
 @section('content')
 
 <div class="container p-4">
-	<form action="{{ route('dashboard.transactions.update', $transaction->id) }}" method="post">
-		@csrf
-		@method('put')
+	<form>
+		{{-- @csrf --}}
+		{{-- @method('put') --}}
 		<div class="mb-3 form-group row">
 			<div class="col-6">
 				<div class="mb-3 form-group">
@@ -16,8 +16,8 @@
 				<div class="form-group">
 					<label class="form-label" for="status">Status</label>
 					<select class="form-control" name="status" id="status" value="{{ $transaction->status }}" disabled>
-						<option value="pending" selected="{{ $transaction->status == 'pending' }}">Pending</option>
-						<option value="paid" selected="{{ $transaction->status == 'paid' }}">Paid</option>
+						<option value="pending" selected="{{ $transaction->status === 'pending' }}">Pending</option>
+						<option value="paid" selected="{{ $transaction->status === 'paid' }}">Paid</option>
 					</select>
 				</div>
 			</div>
@@ -36,9 +36,9 @@
 			<label class="form-label" for="subscription_id">Subscription ID</label>
 			<input class="form-control" type="text" name="subscription_id" id="subscription_id" disabled value="{{ $transaction->subscription_id }}">
 		</div>
-		<div class="text-end">
+		{{-- <div class="text-end">
 			<button type="submit" class="btn btn-warning">Hapus</button>
-		</div>
+		</div> --}}
 	</form>
 </div>
 

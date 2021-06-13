@@ -19,26 +19,27 @@
       </tr>
     </thead>
     <tbody>
-      @foreach($transactions as $transaction)
+      @foreach($transactions as $row)
       <tr>
-        <td>{{ $transaction->id }}</td>
-        @if ($transaction->status == 'paid')
-        <td>{{ $transaction->updated_at }}</td>
+        <td>{{ $row->id }}</td>
+        @if ($row->status === 'paid')
+          <td>{{ $row->updated_at }}</td>
         @else
-        <td></td>
+          <td></td>
         @endif
-        <td>{{ $transaction->customerName }}</td>
-        <td>Rp. {{ $transaction->amount }}</td>
+
+        <td>{{ $row->customerName }}</td>
+        <td>Rp. {{ $row->amount }}</td>
         <td>
-          <span class="badge {{ $transaction->status == 'paid' ? 'bg-success' : 'bg-warning' }}">
-            {{ $transaction->status }}
+          <span class="badge {{ $row->status === 'paid' ? 'bg-success' : 'bg-warning' }}">
+            {{ $row->status }}
           </span>
         </td>
         <td>
-          {{ $transaction->paymentMethod }}
+          {{ $row->paymentMethod }}
         </td>
         <td>
-          <a href="{{  route('dashboard.transactions.edit', $transaction->id) }}" class="btn btn-light">Edit</a>
+          <a href="{{  route('dashboard.transactions.edit', $row->id) }}" class="btn btn-light">Edit</a>
         </td>
       </tr>
       @endforeach

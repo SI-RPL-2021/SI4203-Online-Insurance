@@ -19,11 +19,40 @@ class SubscriptionController extends Controller
      * @param  \App\Models\Subscription  $subscription
      * @return \Illuminate\Http\Response
      */
-    public function show(Subscription $subcription)
+    public function show(Subscription $subcription, $id)
     {
-        return view('pages.subscriptions.detail', ['subscription' => $subcription]);
+        $policy = Policy::find($id);
+        return view('pages.subscriptions.detail', ['subscription' => $subcription, 'policy' => $policy]);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $req)
+    {
+        $policy = Policy::find($req->policyId);
+        $userId = Auth::user()->id;
+
+        $data = $req->all();
+
+        $data['startDate'] = null;
+        $data['endDate'] = null;
+        $data['status'] = 'pending';
+
+        $data['maxCoverage'] = 0;
+        $data['premium'] = 0;
+        $data['claimType'] = $policy->claimType;
+        $data['policy_id'] = $policy->id;
+        $data['policy_name'] = $policy->name;
+        $data['customer_id'] = $userId;
+
+        Subscription::create($data);
+
+        return redirect()->route('pages.profile');
+    }
 
     // Admin-only
 
@@ -35,30 +64,6 @@ class SubscriptionController extends Controller
         return view('dashboard.subscriptions.index', ['subscriptionsRejected' => $subscriptionsRejected, 'subscriptionsPending' => $subscriptionsPending, 'subscriptionsActive' => $subscriptionsActive]);
     }
 
-    public function create(Request $req)
-    {
-        $policy = Policy::find($req->policyId);
-        $userId = Auth::user()->id;
-
-        Subscription::create([
-            'startDate' => null,
-            'endDate' => null,
-            'status' => 'pending',
-            'fullName' => $req->fullName,
-            'birthdate' => $req->birthdate,
-            'phone' => $req->phone,
-            'address' => $req->address,
-            'gender' => $req->gender,
-            'maxCoverage' => 0,
-            'premium' => 0,
-            'claimType' => $policy->claimType,
-            'policy_id' => $policy->id,
-            'policy_name' => $policy->name,
-            'customer_id' => $userId
-        ]);
-
-        return redirect()->route('pages.profile');
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -66,11 +71,24 @@ class SubscriptionController extends Controller
      * @param  \App\Models\Subscription  $subcription
      * @return \Illuminate\Http\Response
      */
-    public function delete(Subscription $subcription, $id)
+    public function delete(Subscription $subcription)
     {
-        Subscription::destroy($id);
+        Subscription::destroy($subcription->id);
         return redirect()->route('dashboard.subscriptions.index');
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Subscription  $subscription
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Subscription $subscription)
+    {
+        return view('dashboard.subscriptions.edit', ['subscription' => $subscription]);
+    }
+
+
 
     public function update(Request $req, $id)
     {

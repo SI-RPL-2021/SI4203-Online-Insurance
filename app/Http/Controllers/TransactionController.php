@@ -87,16 +87,14 @@ class TransactionController extends Controller
     public function update(Request $request, Transaction $transaction)
     {
         $subscription = Subscription::find($transaction->subscription_id);
-        // $transaction = $request->all();
-        $transaction->status = 'paid';
-        $transaction->save();
+
+        $transaction->update(['status' => 'paid', 'paymentMethod' => $request->paymentMethod, 'paymentDate' => date('Y-m-d') ]);
 
         if ($subscription) {
             $subscription->endDate = date('Y-m-d', strtotime($subscription->endDate . '+ 30 days'));
             $subscription->status = 'active';
-            $transaction->paymentDate = date('Y-m-d');
             $subscription->save();
         }
-        return redirect()->route('pages.transactions.detail', $transaction->id);
+        return redirect()->route('pages.profile');
     }
 }

@@ -11,7 +11,7 @@
       <p>{{ $policy->desc }}</p>
       <p>premi mulai dari Rp.{{ $policy->premium }}</p>
       <p>Kategori : {{ $policy->claimType }}</p>
-      <a href="{{ route('subscription.detail', ['id' => '1' ]) }}" class="btn btn-warning">Buy Now</a>
+      <a href="{{ route('pages.subscriptions.show', $policy->id) }}" class="btn btn-warning">Buy Now</a>
     </div>
   </div>
 </div>

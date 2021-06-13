@@ -7,7 +7,7 @@
   <div class="mx-auto card" style="max-width: 500px">
     <div class="p-5 card-body">
       <h4 class="mb-3">Form Pendaftaran - {{ $policy->name }}</h4>
-      <form action="{{ route('subscription.create') }}" method="POST">
+      <form action="{{ route('pages.subscriptions.store') }}" method="POST">
         @csrf
         <input type="hidden" name="policyId" id="policyId" value="{{ $policy->id }}">
 

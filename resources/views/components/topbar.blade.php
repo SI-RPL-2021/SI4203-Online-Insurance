@@ -19,8 +19,15 @@
         <li class="nav-item">
           <a class="nav-link fw-bold" aria-current="page" href="{{ route('pages.claims.create') }}">Claim</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link fw-bold" aria-current="page" href="#">Support</a>
+        <li class="nav-item dropdown">
+          <div class="nav-link dropdown-toggle fw-bold" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Support
+          </div>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="{{ route('pages.hospitals.list') }}">Rumah Sakit Rujukan</a></li>
+            <li><a class="dropdown-item" href="{{ route('pages.issues.list') }}">Komplain</a></li>
+            <li><a class="dropdown-item" href="{{ route('pages.kantor.list') }}">Kantor</a></li>
+          </ul>
         </li>
       </ul>
       <div>

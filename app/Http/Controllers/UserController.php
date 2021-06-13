@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Claim;
 use App\Models\Subscription;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +16,9 @@ class UserController extends Controller
 
         $subscriptions = Subscription::where('customer_id', $user->id)->get();
         $transactions = Transaction::where('customer_id', $user->id)->get();
+        $claims = Claim::where('customer_id', $user->id)->get();
         $total = DB::table('transactions')->where('customer_id', $user->id)->where('status', 'paid')->sum('amount');
 
-        return view('pages.profile', ['subscriptions' => $subscriptions, 'transactions' => $transactions, 'total' => $total]);
+        return view('pages.profile', ['subscriptions' => $subscriptions, 'transactions' => $transactions, 'total' => $total, 'claims' => $claims]);
     }
 }

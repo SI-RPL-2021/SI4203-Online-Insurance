@@ -42,7 +42,6 @@
       <table class="table">
         <thead>
           <tr>
-            <!-- <th>Polis</th> -->
             <th>Jumlah</th>
             <th>Status</th>
             <th>Payment date</th>
@@ -52,7 +51,6 @@
         <tbody>
           @foreach($transactions as $transaction)
           <tr>
-            <!-- <td>{{ $transaction->policy_name }}</td> -->
             <td>{{ $transaction->amount }}</td>
             <td>
               <span class="badge bg-success">{{ $transaction->status }}</span>
@@ -64,7 +62,7 @@
             @endif
             <td>
               @if ($transaction->status !='paid')
-              <a href="{{ route('transaction.detail', $transaction->id) }}" class="btn btn-sm btn-light">Bayar</a>
+              <a href="{{ route('pages.transactions.show', $transaction->id) }}" class="btn btn-sm btn-light">Bayar</a>
               @endif
             </td>
 
@@ -77,6 +75,36 @@
             <td>{{ $total }}</td>
           </tr>
           @endif
+        </tbody>
+      </table>
+      <h5>Claim</h5>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Coverage</th>
+            <th>Tanggal Rawat</th>
+            <th>Rumah Sakit</th>
+            <th>Status</th>
+
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($claims as $row)
+          <tr>
+
+            <td>{{ $row->coverage }}</td>
+            <td>{{ $row->hospitalizeDate }}</td>
+            <td>{{ $row->medcareName }}</td>
+
+            <td>
+              <span class="badge bg-success">{{ $row->status }}</span>
+            </td>
+
+
+          </tr>
+          @endforeach
+
         </tbody>
       </table>
     </div>

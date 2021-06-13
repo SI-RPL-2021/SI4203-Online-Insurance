@@ -54,7 +54,7 @@ Route::name('pages.')->group(function() {
 
     Route::resource('hospitals', HospitalController::class)->only(['show']);
     Route::resource('kantor', KantorController::class)->only(['show']);
-    Route::resource('policies', KantorController::class)->only(['show']);
+    Route::resource('policies', PolicyController::class)->only(['show']);
 
     Route::get('/login', function () {
         return view('pages.login');
@@ -77,14 +77,14 @@ Route::prefix('auth')->name('auth.')->group(function() {
 Route::name('pages.')->middleware(['auth'])->group(function () {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 
-    Route::get('/claims', [ClaimController::class, 'list'])->name('claims.list');
-    Route::get('/subscriptions', [SubscriptionController::class, 'list'])->name('subscriptions.list');
-    Route::get('/issues', [SubscriptionController::class, 'list'])->name('issues.list');
+    // Route::get('/claims', [ClaimController::class, 'list'])->name('claims.list');
+    // Route::get('/subscriptions', [SubscriptionController::class, 'list'])->name('subscriptions.list');
+    Route::get('/issues', [IssueController::class, 'list'])->name('issues.list');
 
-    Route::resource('subscriptions', IssueController::class)->only(['show', 'store']);
-    Route::resource('claims', IssueController::class)->only(['show', 'create', 'store']);
+    Route::resource('subscriptions', SubscriptionController::class)->only(['show', 'store']);
+    Route::resource('claims', ClaimController::class)->only(['show', 'create', 'store']);
 
-    Route::resource('transactions', IssueController::class)->only(['show', 'store']);
+    Route::resource('transactions', TransactionController::class)->only(['show', 'store', 'update']);
     Route::resource('issues', IssueController::class)->only(['show', 'store']);
 });
 

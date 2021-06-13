@@ -7,7 +7,7 @@
   <div class="card">
     <div class="card-body p-md-5">
       <h5 class="mb-3">Form Klaim Rawat Inap</h5>
-      <form action="{{route('claim.create')}}" method="POST" enctype="multipart/form-data">
+      <form action="{{route('pages.claims.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
           <div class="col-12 col-md-6">

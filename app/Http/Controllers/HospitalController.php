@@ -28,7 +28,7 @@ class HospitalController extends Controller
      */
     public function list()
     {
-        // TODO: return view
+        return view('pages.hospitals.index');
     }
 
 
@@ -44,6 +44,17 @@ class HospitalController extends Controller
 
         return view('dashboard.hospitals.index', ['hospitals' => $hospitals]);
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('dashboard.hospitals.create');
+    }
+
 
     /**
      * Store a newly created resource in storage.
