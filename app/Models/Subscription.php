@@ -26,10 +26,10 @@ class Subscription extends Model
     ];
     public function customer()
     {
-        return $this->hasOne(User::class, 'id', 'customer_id');
+        return $this->belongsTo(User::class, 'id', 'customer_id');
     }
     public function policy()
     {
-        return $this->hasOne(Policy::class, 'id', 'policy_id');
+        return $this->belongsTo(Policy::class, 'id', 'policy_id');
     }
 }

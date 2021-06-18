@@ -15,9 +15,7 @@ class CreateClaimsTable extends Migration
     {
         Schema::create("claims", function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string("status");
-            // $table->string("note");
             $table->integer("coverage");
             $table->string("claimantName");
             $table->string("diagnosis");
@@ -26,9 +24,10 @@ class CreateClaimsTable extends Migration
             $table->string("medcareName");
             $table->string("claimType");
             $table->string("dokumen");
-            $table->foreignId("subscription_id");
-            $table->foreignId("customer_id");
-            $table->foreignId("policy_id");
+            $table->foreignId("subscription_id")->constrained('subscriptions');
+            $table->foreignId("customer_id")->constrained('users');
+            $table->foreignId("policy_id")->constrained('policies');
+            $table->timestamps();
         });
     }
 

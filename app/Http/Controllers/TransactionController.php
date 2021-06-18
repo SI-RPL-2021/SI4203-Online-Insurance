@@ -8,48 +8,93 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    public function home()
+
+    // Customer-only
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Transaction  $transaction
+     * @return \Illuminate\Http\Response
+     */
+
+    public function show(Transaction $transaction)
+    {
+        $subscription = Subscription::find($transaction->subscription_id);
+        return view('pages.transactions.detail', ['transaction' => $transaction, 'subscription' => $subscription]);
+    }
+
+    // Admin-only
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
         $transactions = Transaction::all();
-        return view('transactions', ['transactions' => $transactions]);
+        return view('dashboard.transactions.index', ['transactions' => $transactions]);
     }
 
-    public function detail(Request $req, $id)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Transaction  $transaction
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Transaction $transaction)
     {
-
-        $transaction = Transaction::find($id);
-        $subscription = Subscription::find($transaction->subscription_id);
-        return view('transactions-detail', ['transaction' => $transaction, 'subscription' => $subscription]);
+        return view('dashboard.transactions.edit', ['transaction' => $transaction]);
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
     public function create(Request $req)
     {
         Transaction::create([
             'status' => $req->status,
             'amount' => $req->amount
         ]);
-        return redirect(route('transactions.home'));
+        return redirect()->route('dashboard.transactions.index');
     }
-    public function delete(Request $req, $id)
-    {
-        Transaction::destroy($id);
-        return redirect(route('dashboard.transactions'));
-    }
-    public function update(Request $req, $id)
-    {
-        $transaction = Transaction::find($id);
-        if ($transaction) {
-            $subscription = Subscription::find($transaction->subscription_id);
-            $transaction->status = 'paid';
-            $transaction->save();
 
-            if ($subscription) {
-                $subscription->endDate = date('Y-m-d', strtotime($subscription->endDate . '+ 30 days'));
-                $subscription->status = 'active';
-                // $transaction->amount = $req->amount;
-                $transaction->paymentDate = date('Y-m-d');
-                $subscription->save();
-            }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Transaction  $transaction
+     * @return \Illuminate\Http\Response
+     */
+
+    public function destroy(Transaction $transaction)
+    {
+        return redirect()->route('dashboard.transactions.index');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Transaction  $transaction
+     * @return \Illuminate\Http\Response
+     */
+
+    public function update(Request $request, Transaction $transaction)
+    {
+        $subscription = Subscription::find($transaction->subscription_id);
+
+        $transaction->update(['status' => 'paid', 'paymentMethod' => $request->paymentMethod, 'paymentDate' => date('Y-m-d') ]);
+
+        if ($subscription) {
+            $subscription->endDate = date('Y-m-d', strtotime($subscription->endDate . '+ 30 days'));
+            $subscription->status = 'active';
+            $subscription->save();
         }
-        return redirect(route('user.profile'));
+        return redirect()->route('pages.profile');
     }
 }

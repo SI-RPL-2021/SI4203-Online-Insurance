@@ -10,52 +10,86 @@ use Illuminate\Support\Facades\Auth;
 
 class SubscriptionController extends Controller
 {
-    public function home()
-    {
-        $subscriptions = Subscription::all();
-        return view('subscriptions', ['subscriptions' => $subscriptions]);
-    }
 
-    public function checkout(Request $req, $id)
+    // Customer-only
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Subscription  $subscription
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Subscription $subcription, $id)
     {
         $policy = Policy::find($id);
+        return view('pages.subscriptions.detail', ['subscription' => $subcription, 'policy' => $policy]);
+    }
 
-        return view('checkout', ['policy' => $policy]);
-    }
-    public function detail(Request $req, $id)
-    {
-        $policy = Policy::find($id);
-        return view('subscriptions-detail', ['policy' => $policy]);
-    }
-    public function create(Request $req)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $req)
     {
         $policy = Policy::find($req->policyId);
         $userId = Auth::user()->id;
 
-        Subscription::create([
-            'startDate' => null,
-            'endDate' => null,
-            'status' => 'pending',
-            'fullName' => $req->fullName,
-            'birthdate' => $req->birthdate,
-            'phone' => $req->phone,
-            'address' => $req->address,
-            'gender' => $req->gender,
-            'maxCoverage' => 0,
-            'premium' => 0,
-            'claimType' => $policy->claimType,
-            'policy_id' => $policy->id,
-            'policy_name' => $policy->name,
-            'customer_id' => $userId
-        ]);
+        $data = $req->all();
 
-        return redirect(route('user.profile'));
+        $data['startDate'] = null;
+        $data['endDate'] = null;
+        $data['status'] = 'pending';
+
+        $data['maxCoverage'] = 0;
+        $data['premium'] = 0;
+        $data['claimType'] = $policy->claimType;
+        $data['policy_id'] = $policy->id;
+        $data['policy_name'] = $policy->name;
+        $data['customer_id'] = $userId;
+
+        Subscription::create($data);
+
+        return redirect()->route('pages.profile');
     }
-    public function delete(Request $req, $id)
+
+    // Admin-only
+
+    public function index()
     {
-        Subscription::destroy($id);
-        return redirect(route('dashboard.subscriptions'));
+        $subscriptionsPending = Subscription::where('status', 'pending')->get();
+        $subscriptionsActive = Subscription::where('status', 'active')->get();
+        $subscriptionsRejected = Subscription::where('status', 'rejected')->get();
+        return view('dashboard.subscriptions.index', ['subscriptionsRejected' => $subscriptionsRejected, 'subscriptionsPending' => $subscriptionsPending, 'subscriptionsActive' => $subscriptionsActive]);
     }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Subscription  $subcription
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Subscription $subcription)
+    {
+        Subscription::destroy($subcription->id);
+        return redirect()->route('dashboard.subscriptions.index');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Subscription  $subscription
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Subscription $subscription)
+    {
+        return view('dashboard.subscriptions.edit', ['subscription' => $subscription]);
+    }
+
+
+
     public function update(Request $req, $id)
     {
         $subscription = Subscription::find($id);
@@ -90,21 +124,9 @@ class SubscriptionController extends Controller
                 $subscription->premium = $req->premium;
                 $subscription->maxCoverage = $req->maxCoverage;
             }
-            // $subscription->startDate = $req->date;
-            // $subscription->endDate = $req->enddate;
-            // $subscription->fullName = $req->fullName;
-            // $subscription->birthdate = $req->birthdate;
-            // $subscription->phone = $req->phone;
-            // $subscription->address = $req->address;
-            // $subscription->gender = $req->gender;
-            // $subscription->maxCoverage = $req->maxCoverage;
-            // $subscription->premium = $req->premium;
-            // $subscription->policy_id = $policy->id;
-            // $subscription->policy_name = $policy->name;
-            // $subscription->customer_id = $userId;
             $subscription->save();
         }
 
-        return redirect(route('dashboard.subscriptions'));
+        return redirect()->route('dashboard.subscriptions.index');
     }
 }
