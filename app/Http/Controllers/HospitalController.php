@@ -18,7 +18,7 @@ class HospitalController extends Controller
      */
     public function show(Hospital $hospital)
     {
-        return view('pages.hospitals.detail', ['data' => $hospital]);
+        return view('pages.hospitals.detail', ['hospital' => $hospital]);
     }
 
     /**
@@ -28,7 +28,8 @@ class HospitalController extends Controller
      */
     public function list()
     {
-        return view('pages.hospitals.index');
+        $hospitals = Hospital::all();
+        return view('pages.hospitals.index', ['hospitals' => $hospitals]);
     }
 
 
@@ -64,7 +65,9 @@ class HospitalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Hospital::create($request->all());
+
+        return redirect()->route('dashboard.hospitals.index')->with('message', 'Berhasil menambahkan Rumah Sakit');
     }
 
     /**
@@ -76,7 +79,8 @@ class HospitalController extends Controller
      */
     public function update(Request $request, Hospital $hospital)
     {
-        // TODO: Update
+        $hospital->update($request->all());
+        return redirect()->route('dashboard.hospitals.index')->with('message', 'Berhasil mengupdate Rumah Sakit');
     }
 
     /**
@@ -87,7 +91,20 @@ class HospitalController extends Controller
      */
     public function destroy(Hospital $hospital)
     {
-        return response()->json(true);
+        Hospital::destroy($hospital->id); 
+        return redirect()->route('dashboard.hospitals.index')->with('message', 'Berhasil menambahkan Rumah Sakit');
         // return redirect()->route('hospitals.index');
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Hospital  $hospital
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Hospital $hospital)
+    {
+        return view('dashboard.hospitals.edit', ['hospital' => $hospital]);
+    }
+
 }

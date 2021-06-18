@@ -9,6 +9,6 @@ class Hospital extends Model
 {
     use HasFactory;
     protected $fillable = [
-        // TODO: Add field
+    'name','address','city'
     ];
 }
