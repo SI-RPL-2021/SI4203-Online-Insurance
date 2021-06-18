@@ -85,6 +85,6 @@ Route::name('pages.')->middleware(['auth'])->group(function () {
     Route::resource('claims', ClaimController::class)->only(['show', 'create', 'store']);
 
     Route::resource('transactions', TransactionController::class)->only(['show', 'store', 'update']);
-    Route::resource('issues', IssueController::class)->only(['show', 'store']);
+    Route::resource('issues', IssueController::class)->only(['show', 'store', 'create']);
 });
 

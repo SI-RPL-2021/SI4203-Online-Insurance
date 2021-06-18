@@ -15,7 +15,10 @@ class CreateIssuesTable extends Migration
     {
         Schema::create('issues', function (Blueprint $table) {
             $table->id();
-            // TODO: Add field
+            $table->string("title");
+            $table->string("comment");
+            $table->foreignId('user_id')->constrained('users');
+            $table->string("respons")->nullable(true);
             $table->timestamps();
         });
     }
