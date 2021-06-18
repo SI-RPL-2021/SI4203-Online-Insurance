@@ -56,7 +56,7 @@ class ClaimController extends Controller
 
         if ($claim) {
             $claim->status = $req->status;
-            $claim->note = $req->note;
+            // $claim->note = $req->note;
             $claim->coverage = $req->coverage;
             $claim->claimantName = $req->claimantName;
             $claim->diagnosis = $req->diagnosis;

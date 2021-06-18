@@ -52,7 +52,8 @@ class DashboardController extends Controller
             return view('dashboard/claims-detail', ['claim' => []]);
         }
         $claim = Claim::find($id);
-        return view('dashboard/claims-detail', ['claim' => $claim]);
+        $policy = Policy::find($claim->policy_id);
+        return view('dashboard/claims-detail', ['claim' => $claim, 'policy' => $policy]);
     }
 
     public function policiesDetail(Request $req, $id)
