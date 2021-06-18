@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Issue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IssueController extends Controller
 {
@@ -17,7 +18,8 @@ class IssueController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.issues.create');
+
     }
 
     /**
@@ -27,7 +29,8 @@ class IssueController extends Controller
      */
     public function list()
     {
-        return view('pages.issues.index');
+        $issues = Issue::where("user_id",Auth::user()->id)->get();
+        return view('pages.issues.index', ['issues' => $issues]);
     }
 
 
@@ -53,7 +56,12 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $body=$request->all();
+        $body["user_id"]=Auth::user()->id;
+        Issue::create($body);
+
+        return redirect()->route('pages.issues.list')->with('message', 'Berhasil menambahkan Issue');
+    
     }
 
     /**
@@ -75,7 +83,8 @@ class IssueController extends Controller
      */
     public function edit(Issue $issue)
     {
-        //
+        return view('dashboard.issues.edit', ['issue' => $issue]);
+
     }
 
     /**
@@ -87,7 +96,8 @@ class IssueController extends Controller
      */
     public function update(Request $request, Issue $issue)
     {
-        //
+        $issue->update($request->all());
+        return redirect()->route('dashboard.issues.index')->with('message', 'Berhasil mengupdate Issue');
     }
 
     /**
@@ -98,6 +108,7 @@ class IssueController extends Controller
      */
     public function destroy(Issue $issue)
     {
-        //
+        Issue::destroy($issue->id); 
+        return redirect()->route('dashboard.issues.index')->with('message', 'Berhasil menambahkan Issue');
     }
 }

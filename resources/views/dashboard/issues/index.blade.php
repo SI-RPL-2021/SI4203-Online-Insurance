@@ -11,6 +11,10 @@
     <thead>
       <tr>
         <th>#</th>
+        <th>title</th>
+        <th>comment</th>
+        <th>user</th>
+
 				{{-- TODO: Add headers --}}
         <th>Action</th>
       </tr>
@@ -19,6 +23,10 @@
       @foreach($issues as $row)
       <tr>
         <td>{{ $loop->iteration }}</td>
+        <td>{{ $row->title }}</td>
+        <td>{{ $row->comment }}</td>
+        <td>{{ $row->user->name}}</td>
+
 				{{-- TODO: Add columns --}}
         <td>
           <a class="btn btn-sm btn-light" href="{{ route('dashboard.issues.edit', $row->id) }}">Edit</a>
