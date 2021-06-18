@@ -15,7 +15,10 @@ class CreateKantorTable extends Migration
     {
         Schema::create('kantor', function (Blueprint $table) {
             $table->id();
-            // TODO: Add field
+            $table->string("name");
+            $table->string("address");
+            $table->string("phone");
+            $table->string("city");
             $table->timestamps();
         });
     }
