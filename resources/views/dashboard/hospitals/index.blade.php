@@ -11,6 +11,9 @@
     <thead>
       <tr>
         <th>#</th>
+        <th>name</th>
+        <th>address</th>
+        <th>city</th>
 				{{-- TODO: Add headers --}}
         <th>
           Action
@@ -21,6 +24,9 @@
       @foreach($hospitals as $row)
       <tr>
         <td>{{ $loop->iteration }}</td>
+        <td>{{ $row->name }}</td>
+        <td>{{ $row->address }}</td>
+        <td>{{ $row->city }}</td>
 				{{-- TODO: Add columns --}}
         <td>
           <a class="btn btn-sm btn-light" href="{{ route('dashboard.hospitals.edit', $row->id) }}">Edit</a>
