@@ -11,7 +11,10 @@
     <thead>
       <tr>
         <th>#</th>
-				{{-- TODO: Add headers --}}
+				<th>Nama</th>
+        <th>Alamat</th>
+        <th>Telepon</th>
+        <th>Kota</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -19,6 +22,10 @@
       @foreach($kantor as $row)
       <tr>
         <td>{{ $loop->iteration }}</td>
+        <td>{{ $row->name }}</td>
+        <td>{{ $row->address }}</td>
+        <td>{{ $row->phone }}</td>
+        <td>{{ $row->city }}</td>
 				{{-- TODO: Add columns --}}
         <td>
           <a class="btn btn-sm btn-light" href="{{ route('dashboard.kantor.edit', $row->id) }}">Edit</a>
