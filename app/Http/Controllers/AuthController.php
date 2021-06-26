@@ -60,6 +60,6 @@ class AuthController extends Controller
         $req->session()->invalidate();
         $req->session()->regenerateToken();
 
-        return redirect()->route('pages.home');
+        return redirect()->route('pages.index');
     }
 }
