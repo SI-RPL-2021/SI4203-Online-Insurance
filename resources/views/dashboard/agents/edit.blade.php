@@ -34,10 +34,6 @@
           <label for="password" class="form-label">Password</label>
           <input type="password" class="form-control" id="password" name="password" disabled>
         </div>
-        <div class="mb-3">agent
-          <label for="loc_city" class="form-label">Domisili</label>
-          <input type="text" class="form-control" id="loc_city" name="loc_city" value="{{ $agent->loc_city }}">
-        </div>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" name="status" id="status" checked="{{ $agent->status }}">
           <label class="form-check-label" for="status">
@@ -45,6 +41,45 @@
           </label>
         </div>
       </div>
+      <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($customers as $row)
+      <tr>
+        <td>{{ $loop->iteration }}</td>
+        <td>{{ $row->name }}</td>
+        <td>{{ $row->email }}</td>
+
+				{{-- TODO: Add columns --}}
+        <td>
+
+					<form action="{{ route('dashboard.agents.destroy', $row->id) }}" method="POST" class="d-inline-block">
+						@csrf
+            @method('delete')
+						<button class="btn btn-sm btn-outline-danger" type="submit">Hapus</button>
+					</form>
+        </td>
+
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+      <div class="mb-3">
+          <label for="policy" class="form-label">Customer</label>
+          <select class="form-select" aria-label="" id="customer" name="customer">
+            <option selected>Pilih Customer</option>
+            @foreach($users as $row)
+            <option value="{{$row->id}}">{{$row->name}}</option>
+            @endforeach
+          </select>
+        </div>
       <div class="col-12 col-md-6">
         <div class="text-end">
           <button class="btn btn-warning" type="submit">Submit</button>

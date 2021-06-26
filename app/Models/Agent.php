@@ -11,9 +11,8 @@ class Agent extends Model
 
     protected $fillable = [
         'status',
-        'loc_city',
+        'user_id', 
         'phone',
-        'user_id'
     ];
 
     public function user() {

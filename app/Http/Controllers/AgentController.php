@@ -6,6 +6,7 @@ use App\Models\Agent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AgentController extends Controller
 {
@@ -90,7 +91,10 @@ class AgentController extends Controller
      */
     public function edit(Agent $agent)
     {
-        return view('dashboard.agents.edit', ['agent' => $agent]);
+        $users = User::whereNull("agent_id")->where ('role', 'customer')->get();
+        $customers = User::where("agent_id",Auth::user()->id)->get();
+        return view('dashboard.agents.edit', ['agent' => $agent,'users' => $users,'customers' => $customers]);
+  
     }
 
     /**
@@ -102,7 +106,10 @@ class AgentController extends Controller
      */
     public function update(Request $request, Agent $agent)
     {
-        return view('dashboard.agents.index')->with('message', 'Berhasil mengubah user');
+        $user=User::find($request->customer);
+        $agent->customers()->save($user);
+        return redirect()->route('dashboard.agents.index')->with('message', 'Berhasil menambahkan user');
+
     }
 
     /**
