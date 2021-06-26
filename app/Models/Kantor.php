@@ -11,6 +11,6 @@ class Kantor extends Model
 
     protected $table = "kantor";
     protected $fillable = [
-        // TODO: Add field
+        "name","address","phone","city"
     ];
 }

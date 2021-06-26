@@ -17,7 +17,8 @@ class KantorController extends Controller
      */
     public function list()
     {
-        return view('pages.kantor.index');
+        $kantor = Kantor::all();
+        return view('pages.kantor.index', ['kantor' => $kantor]);
     }
 
 
@@ -51,7 +52,9 @@ class KantorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Kantor::create($request->all());
+
+        return redirect()->route('dashboard.kantor.index')->with('message', 'Berhasil menambahkan Kantor');
     }
 
     /**
@@ -73,7 +76,7 @@ class KantorController extends Controller
      */
     public function edit(Kantor $kantor)
     {
-        //
+        return view('dashboard.kantor.edit', ['kantor' => $kantor]);
     }
 
     /**
@@ -85,7 +88,8 @@ class KantorController extends Controller
      */
     public function update(Request $request, Kantor $kantor)
     {
-        //
+        $kantor->update($request->all());
+        return redirect()->route('dashboard.kantor.index')->with('message', 'Berhasil mengupdate Kantor');
     }
 
     /**
@@ -96,6 +100,7 @@ class KantorController extends Controller
      */
     public function destroy(Kantor $kantor)
     {
-        //
+        Kantor::destroy($kantor->id); 
+        return redirect()->route('dashboard.kantor.index')->with('message', 'Berhasil menambahkan Kantor');
     }
 }
