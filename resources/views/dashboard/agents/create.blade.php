@@ -7,8 +7,8 @@
   <form action="{{ route('dashboard.agents.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="mb-3">
-      <label for="policy" class="form-label">Polis Asuransi</label>
-      <select class="form-select" aria-label="Polis Asuransi" id="role" name="role">
+      <label for="policy" class="form-label">Role</label>
+      <select class="form-select" aria-label="Role" id="role" name="role">
         <option selected>Pilih Role User</option>
         <option value="admin">Admin</option>
         <option value="agent">Agent</option>
@@ -29,10 +29,6 @@
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
       <input type="password" class="form-control" id="password" name="password">
-    </div>
-    <div class="mb-3">
-      <label for="loc_city" class="form-label">Domisili</label>
-      <input type="text" class="form-control" id="loc_city" name="loc_city">
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" name="status" id="status">

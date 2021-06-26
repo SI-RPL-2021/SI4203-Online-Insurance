@@ -17,7 +17,6 @@ class CreateAgentsTable extends Migration
             $table->id();
             $table->string('status');
             $table->string('phone');
-            $table->string('loc_city');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });

@@ -21,7 +21,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'phone'
+        'phone',
+        'agent_id'
     ];
 
     /**
@@ -47,4 +48,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Agent::class);
     }
+
 }
