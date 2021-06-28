@@ -106,9 +106,13 @@ class AgentController extends Controller
      */
     public function update(Request $request, Agent $agent)
     {
-        $user = User::find($request->customer);
-        $agent->customers()->save($user);
-        return redirect()->route('dashboard.agents.index')->with('message', 'Berhasil menambahkan user');
+        $user = User::find($request->id);
+        if ($user) {
+            $user->update($request->only(['role', 'name']));
+        }
+        $agent->update($request->only(['phone', 'status']));
+
+        return redirect()->route('dashboard.agents.index')->with('message', 'Berhasil mengupdate user');
     }
 
     /**
@@ -128,16 +132,22 @@ class AgentController extends Controller
         $customer_id = $request->get('customer_id');
         $agent_id = $request->get('agent_id');
 
-        $agent = Agent::find($agent_id);
-        // TODO: Add Customer;
+        $user = User::find($customer_id);
+        $user->update(['agent_id' => $agent_id]);
 
-        $user = User::find();
-        $user->
+        $agent = Agent::find($agent_id);
+        $agent->customers()->save($user);
+
+        return redirect()->back();
     }
 
-    public function removeCustomer(Request $request)
+    public function removeCustomer($id)
     {
-        $agent = Agent::where('user_id', $request->id);
-        $agent->customers();
+        // $agent = Agent::where('user_id', $request->get('agent_id'))->get();
+        $user = User::find($id);
+        if ($user) {
+            $user->update(['agent_id' => null]);
+        }
+        return redirect()->back();
     }
 }

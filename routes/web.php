@@ -27,14 +27,13 @@ use Illuminate\Support\Facades\Route;
 
 // Admin Facing Routes
 Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'admin'])->group(function () {
+    Route::post('agents/customer', [AgentController::class, 'addCustomer'])->name('agents.addCustomer');
+    Route::delete('agents/customer/{id}', [AgentController::class, 'removeCustomer'])->name('agents.removeCustomer');
     Route::resources([
         'agents' => AgentController::class
     ]);
     Route::resource('policies', PolicyController::class)->except(['show']);
     Route::resource('hospitals', HospitalController::class)->except(['show']);
-
-    Route::post('agents/customer', [AgentController::class, 'addCutomer'])->name('agents.addCustomer');
-    Route::delete('agents/customer', [AgentController::class, 'removeCustomer'])->name('agents.removeCustomer');
 });
 
 // Admin & Agent

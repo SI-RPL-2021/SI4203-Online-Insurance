@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('role');
             $table->rememberToken();
             $table->timestamps();
-            $table->string('agent_id')->nullable();
+            $table->foreignId('agent_id')->constrained('agents')->nullable();
         });
     }
 

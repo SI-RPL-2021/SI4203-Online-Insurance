@@ -7,7 +7,7 @@
   <form action="{{route('dashboard.agents.update', $agent->id)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('put')
-
+    <input type="hidden" name="id" value="{{ $agent->user_id }}">
     <div class="row">
       <div class="col-12">
         <div class="mb-3">
@@ -78,9 +78,12 @@
     </tbody>
   </table>
   <form action="{{ route('dashboard.agents.addCustomer') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+
     <div class="mb-3">
-      <label for="policy" class="form-label">Customer</label>
-      <select class="form-select mb-4" aria-label="" id="customer" name="customer">
+      <input type="hidden" name="agent_id" value="{{ $agent->id }}">
+      <label for="customer_id" class="form-label">Customer</label>
+      <select class="form-select mb-4" aria-label="" id="customer_id" name="customer_id">
         <option selected>Pilih Customer</option>
         @foreach($users as $row)
         <option value="{{$row->id}}">{{$row->name}}</option>
