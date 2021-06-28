@@ -58,9 +58,27 @@ class SubscriptionController extends Controller
 
     public function index()
     {
-        $subscriptionsPending = Subscription::where('status', 'pending')->get();
-        $subscriptionsActive = Subscription::where('status', 'active')->get();
-        $subscriptionsRejected = Subscription::where('status', 'rejected')->get();
+        $subscriptionsPending = [];
+        $subscriptionsActive = [];
+        $subscriptionsRejected = [];
+
+        $user = Auth::user();
+        $isAgent = $user->role === 'agent';
+        $id = $user->id;
+
+        if ($isAgent) {
+            $query = Subscription::select('subscriptions.*')
+                ->join('users', 'users.id', '=', 'subscriptions.customer_id')
+                ->where('users.agent_id', '=', $id);
+
+            $subscriptionsPending = $query->where('subscriptions.status', 'pending')->get();
+            $subscriptionsActive = $query->where('subscriptions.status', 'active')->get();
+            $subscriptionsRejected = $query->where('subscriptions.status', 'rejected')->get();
+        } else {
+            $subscriptionsPending = Subscription::where('status', 'pending')->get();
+            $subscriptionsActive = Subscription::where('status', 'active')->get();
+            $subscriptionsRejected = Subscription::where('status', 'rejected')->get();
+        }
         return view('dashboard.subscriptions.index', ['subscriptionsRejected' => $subscriptionsRejected, 'subscriptionsPending' => $subscriptionsPending, 'subscriptionsActive' => $subscriptionsActive]);
     }
 

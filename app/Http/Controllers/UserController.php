@@ -19,6 +19,6 @@ class UserController extends Controller
         $claims = Claim::where('customer_id', $user->id)->get();
         $total = DB::table('transactions')->where('customer_id', $user->id)->where('status', 'paid')->sum('amount');
 
-        return view('pages.profile', ['subscriptions' => $subscriptions, 'transactions' => $transactions, 'total' => $total, 'claims' => $claims]);
+        return view('pages.profile', ['subscriptions' => $subscriptions, 'transactions' => $transactions, 'total' => $total, 'claims' => $claims, 'user' => $user]);
     }
 }

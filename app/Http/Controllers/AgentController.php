@@ -22,7 +22,6 @@ class AgentController extends Controller
     public function show(Agent $agent)
     {
         return view('pages.agents.detail', ['agent' => $agent]);
-
     }
 
 
@@ -76,10 +75,12 @@ class AgentController extends Controller
 
         $user = User::create($forUser);
 
-        $forAgent = $request->except(['email', 'password', 'name', 'role']);
-        $forAgent['user_id'] = $user->id;
+        if ($request->role === 'agent') {
+            $forAgent = $request->except(['email', 'password', 'name', 'role']);
+            $forAgent['user_id'] = $user->id;
+            Agent::create($forAgent);
+        }
 
-        Agent::create($forAgent);
         return redirect()->route('dashboard.agents.index')->with('message', 'Berhasil menambahkan user');
     }
 
@@ -91,10 +92,9 @@ class AgentController extends Controller
      */
     public function edit(Agent $agent)
     {
-        $users = User::whereNull("agent_id")->where ('role', 'customer')->get();
-        $customers = User::where("agent_id",Auth::user()->id)->get();
-        return view('dashboard.agents.edit', ['agent' => $agent,'users' => $users,'customers' => $customers]);
-  
+        $users = User::whereNull("agent_id")->where('role', 'customer')->get();
+        $customers = User::where("agent_id", Auth::user()->id)->get();
+        return view('dashboard.agents.edit', ['agent' => $agent, 'users' => $users, 'customers' => $customers]);
     }
 
     /**
@@ -106,10 +106,9 @@ class AgentController extends Controller
      */
     public function update(Request $request, Agent $agent)
     {
-        $user=User::find($request->customer);
+        $user = User::find($request->customer);
         $agent->customers()->save($user);
         return redirect()->route('dashboard.agents.index')->with('message', 'Berhasil menambahkan user');
-
     }
 
     /**
@@ -122,5 +121,23 @@ class AgentController extends Controller
     {
         Agent::destroy($agent->id);
         return redirect()->route('dashboard.agents.index')->with('message', 'Berhasil menghapus user');
+    }
+
+    public function addCustomer(Request $request)
+    {
+        $customer_id = $request->get('customer_id');
+        $agent_id = $request->get('agent_id');
+
+        $agent = Agent::find($agent_id);
+        // TODO: Add Customer;
+
+        $user = User::find();
+        $user->
+    }
+
+    public function removeCustomer(Request $request)
+    {
+        $agent = Agent::where('user_id', $request->id);
+        $agent->customers();
     }
 }

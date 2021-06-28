@@ -92,21 +92,24 @@
         <tbody>
           @foreach($claims as $row)
           <tr>
-
             <td>{{ $row->coverage }}</td>
             <td>{{ $row->hospitalizeDate }}</td>
             <td>{{ $row->medcareName }}</td>
-
             <td>
               <span class="badge bg-success">{{ $row->status }}</span>
             </td>
-
-
           </tr>
           @endforeach
 
         </tbody>
       </table>
+      @if($user->agent)
+        <div>
+          <h4>Kontak Agent</h4>
+          <p>{{ $user->agent->name }}</p>
+          <p>{{ $user->agent->phone }}</p>
+        </div>
+      @endif
     </div>
 
   </div>

@@ -44,9 +44,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getIsAdminAgentAttribute()
+    {
+        $roles = ['admin', 'agent'];
+        return in_array($this->role, $roles);
+    }
+
     public function agent()
     {
         return $this->belongsTo(Agent::class);
     }
-
 }

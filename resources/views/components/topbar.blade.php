@@ -45,7 +45,7 @@
             </svg>
           </button>
           <ul class="border-0 shadow dropdown-menu dropdown-menu-end w-100" aria-labelledby="dropdown">
-            @if(Auth::user()->role === 'admin')
+            @if(Auth::user()->is_admin_agent)
             <li>
               <a class="dropdown-item" href="{{route('dashboard.index')}}">Dashboard</a>
             </li>
@@ -73,9 +73,6 @@
           </a>
         </div>
         @endif
-
-
-
       </div>
     </div>
   </div>

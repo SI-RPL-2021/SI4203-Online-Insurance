@@ -41,7 +41,13 @@
           </label>
         </div>
       </div>
-      <table class="table">
+      <div class="text-end">
+        <button class="btn btn-warning" type="submit">Submit</button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table mb-4">
     <thead>
       <tr>
         <th>#</th>
@@ -57,34 +63,30 @@
         <td>{{ $row->name }}</td>
         <td>{{ $row->email }}</td>
 
-				{{-- TODO: Add columns --}}
+        {{-- TODO: Add columns --}}
         <td>
 
-					<form action="{{ route('dashboard.agents.destroy', $row->id) }}" method="POST" class="d-inline-block">
-						@csrf
+          <form action="{{ route('dashboard.agents.removeCustomer', $row->id) }}" method="POST" class="d-inline-block">
+            @csrf
             @method('delete')
-						<button class="btn btn-sm btn-outline-danger" type="submit">Hapus</button>
-					</form>
+            <button class="btn btn-sm btn-outline-danger" type="submit">Hapus</button>
+          </form>
         </td>
 
       </tr>
       @endforeach
     </tbody>
   </table>
-      <div class="mb-3">
-          <label for="policy" class="form-label">Customer</label>
-          <select class="form-select" aria-label="" id="customer" name="customer">
-            <option selected>Pilih Customer</option>
-            @foreach($users as $row)
-            <option value="{{$row->id}}">{{$row->name}}</option>
-            @endforeach
-          </select>
-        </div>
-      <div class="col-12 col-md-6">
-        <div class="text-end">
-          <button class="btn btn-warning" type="submit">Submit</button>
-        </div>
-      </div>
+  <form action="{{ route('dashboard.agents.addCustomer') }}" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="policy" class="form-label">Customer</label>
+      <select class="form-select mb-4" aria-label="" id="customer" name="customer">
+        <option selected>Pilih Customer</option>
+        @foreach($users as $row)
+        <option value="{{$row->id}}">{{$row->name}}</option>
+        @endforeach
+      </select>
+      <button class="btn btn-sm btn-warning">Add</button>
     </div>
   </form>
 </div>

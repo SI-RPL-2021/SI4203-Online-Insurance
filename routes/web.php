@@ -27,25 +27,34 @@ use Illuminate\Support\Facades\Route;
 
 // Admin Facing Routes
 Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/',[DashboardController::class, 'index'])->name('index');
+    Route::resources([
+        'agents' => AgentController::class
+    ]);
+    Route::resource('policies', PolicyController::class)->except(['show']);
+    Route::resource('hospitals', HospitalController::class)->except(['show']);
+
+    Route::post('agents/customer', [AgentController::class, 'addCutomer'])->name('agents.addCustomer');
+    Route::delete('agents/customer', [AgentController::class, 'removeCustomer'])->name('agents.removeCustomer');
+});
+
+// Admin & Agent
+Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'admin_agent'])->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
 
     // Excluding customer-facing routes
     Route::resource('claims', ClaimController::class)->except(['store', 'show']);
-    Route::resource('policies', PolicyController::class)->except(['show']);
-    Route::resource('hospitals', HospitalController::class)->except(['show']);
     Route::resource('issues', IssueController::class)->except(['show', 'create']);
 
     Route::resources([
         'subscriptions' => SubscriptionController::class,
         'transactions' => TransactionController::class,
         'kantor' => KantorController::class,
-        'agents' => AgentController::class
     ]);
 });
 
 
 // Public Facing Routes
-Route::name('pages.')->group(function() {
+Route::name('pages.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
 
     Route::get('/policies', [PolicyController::class, 'list'])->name('policies.list');
@@ -67,7 +76,7 @@ Route::name('pages.')->group(function() {
 
 
 
-Route::prefix('auth')->name('auth.')->group(function() {
+Route::prefix('auth')->name('auth.')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -87,4 +96,3 @@ Route::name('pages.')->middleware(['auth'])->group(function () {
     Route::resource('transactions', TransactionController::class)->only(['show', 'store', 'update']);
     Route::resource('issues', IssueController::class)->only(['show', 'store', 'create']);
 });
-

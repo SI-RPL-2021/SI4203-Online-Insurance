@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminOnly
+class AdminAgentOnly
 {
 	/**
 	 * Handle an incoming request.
@@ -17,7 +17,8 @@ class AdminOnly
 	 */
 	public function handle(Request $request, Closure $next)
 	{
-		if (Auth::user()->role === 'admin') {
+		$roles = ['admin', 'agent'];
+		if (in_array(Auth::user()->role, $roles)) {
 			return $next($request);
 		}
 		return redirect(route('pages.index'));

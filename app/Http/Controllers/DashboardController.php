@@ -8,16 +8,42 @@ use App\Models\Policy;
 use App\Models\Subscription;
 use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
 
     public function index()
     {
-        $claimsPending = Claim::where('status', 'pending')->count();
-        $subscriptionsPending = Subscription::where('status', 'pending')->count();
-        $subscriptionsActive = Subscription::where('status', 'active')->count();
-        $customers = User::where('role', 'customer');
+
+        $claimsPending = 0;
+        $subscriptionsPending = 0;
+        $subscriptionsActive = 0;
+        $customers = [];
+
+        $user = Auth::user();
+        $isAgent = $user->role === 'agent';
+        $id = $user->id;
+
+        if ($isAgent) {
+            $claimsPending = Claim::select('claims.*')->join('users', 'users.id', '=', 'claims.customer_id')
+                ->where('users.agent_id', '=', $id)
+                ->where('claims.status', 'pending')
+                ->count();
+
+            $query = Subscription::select('subscriptions.*')->join('users', 'users.id', '=', 'subscriptions.customer_id')
+                ->where('users.agent_id', '=', $id);
+            $subscriptionsPending = $query->where('subscriptions.status', 'pending')->count();
+            $subscriptionsActive = $query->where('subscriptions.status', 'active')->count();
+
+            $customers = User::where('users.agent_id', '=', $id)->get();
+        } else {
+            $claimsPending = Claim::where('status', 'pending')->count();
+            $subscriptionsPending = Subscription::where('status', 'pending')->count();
+            $subscriptionsActive = Subscription::where('status', 'active')->count();
+            $customers = User::where('role', 'customer')->get();
+        }
+
 
         return view('dashboard.index', ['customers' => $customers, 'claimsPending' => $claimsPending, 'subscriptionsPending' => $subscriptionsPending, 'subscriptionsActive' => $subscriptionsActive]);
     }

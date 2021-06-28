@@ -78,7 +78,16 @@ class ClaimController extends Controller
      */
     public function index()
     {
-        $claims = Claim::all();
+        $user = Auth::user();
+        $isAgent = $user->role === 'agent';
+        $id = $user->id;
+        $claims = [];
+
+        if ($isAgent) {
+            $claims = Claim::select('claims.*')->join('users', 'users.id', '=', 'claims.customer_id')->where('users.agent_id', '=', $id)->get();
+        } else {
+            $claims = Claim::all();
+        }
         return view('dashboard.claims.index', ['claims' => $claims]);
     }
 

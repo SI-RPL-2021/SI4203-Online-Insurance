@@ -19,7 +19,6 @@ class IssueController extends Controller
     public function create()
     {
         return view('pages.issues.create');
-
     }
 
     /**
@@ -29,7 +28,7 @@ class IssueController extends Controller
      */
     public function list()
     {
-        $issues = Issue::where("user_id",Auth::user()->id)->get();
+        $issues = Issue::where("user_id", Auth::user()->id)->get();
         return view('pages.issues.index', ['issues' => $issues]);
     }
 
@@ -44,7 +43,16 @@ class IssueController extends Controller
      */
     public function index()
     {
-        $issues = Issue::all();
+        $user = Auth::user();
+        $isAgent = $user->role === 'agent';
+        $id = $user->id;
+        $issues = [];
+
+        if ($isAgent) {
+            $issues = Issue::select('issues.*')->join('users', 'users.id', '=', 'issues.user_id')->where('users.agent_id', '=', $id)->get();
+        } else {
+            $issues = Issue::all();
+        }
         return view('dashboard.issues.index', ['issues' => $issues]);
     }
 
@@ -56,12 +64,11 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-        $body=$request->all();
-        $body["user_id"]=Auth::user()->id;
+        $body = $request->all();
+        $body["user_id"] = Auth::user()->id;
         Issue::create($body);
 
         return redirect()->route('pages.issues.list')->with('message', 'Berhasil menambahkan Issue');
-    
     }
 
     /**
@@ -84,7 +91,6 @@ class IssueController extends Controller
     public function edit(Issue $issue)
     {
         return view('dashboard.issues.edit', ['issue' => $issue]);
-
     }
 
     /**
@@ -108,7 +114,7 @@ class IssueController extends Controller
      */
     public function destroy(Issue $issue)
     {
-        Issue::destroy($issue->id); 
+        Issue::destroy($issue->id);
         return redirect()->route('dashboard.issues.index')->with('message', 'Berhasil menambahkan Issue');
     }
 }

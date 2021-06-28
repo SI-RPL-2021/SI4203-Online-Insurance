@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Subscription;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -34,7 +35,16 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::all();
+        $transactions = [];
+        $user = Auth::user();
+        $isAgent = $user->role === 'agent';
+        $id = $user->id;
+
+        if ($isAgent) {
+            $transactions = Transaction::select('transactions.*')->join('users', 'users.id', '=', 'transactions.customer_id')->where('users.agent_id', '=', $id)->get();
+        } else {
+            $transactions = Transaction::all();
+        }
         return view('dashboard.transactions.index', ['transactions' => $transactions]);
     }
 
@@ -88,7 +98,7 @@ class TransactionController extends Controller
     {
         $subscription = Subscription::find($transaction->subscription_id);
 
-        $transaction->update(['status' => 'paid', 'paymentMethod' => $request->paymentMethod, 'paymentDate' => date('Y-m-d') ]);
+        $transaction->update(['status' => 'paid', 'paymentMethod' => $request->paymentMethod, 'paymentDate' => date('Y-m-d')]);
 
         if ($subscription) {
             $subscription->endDate = date('Y-m-d', strtotime($subscription->endDate . '+ 30 days'));
