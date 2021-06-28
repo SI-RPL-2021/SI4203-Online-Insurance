@@ -48,7 +48,9 @@ class AgentController extends Controller
     public function index()
     {
         $agents = Agent::all();
-        return view('dashboard.agents.index', ['agents' => $agents]);
+        $admins = User::where('role', 'admin')->get();
+
+        return view('dashboard.agents.index', ['agents' => $agents, 'admins' => $admins]);
     }
 
     /**

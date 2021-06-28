@@ -11,8 +11,8 @@
     <div class="row">
       <div class="col-12">
         <div class="mb-3">
-          <label for="policy" class="form-label">Polis Asuransi</label>
-          <select class="form-select" aria-label="Polis Asuransi" id="role" name="role">
+          <label for="policy" class="form-label">Role</label>
+          <select class="form-select" aria-label="" id="role" name="role">
             <option selected>Pilih Role User</option>
             <option value="admin" selected="{{ $agent->user->role === 'admin' }}">Admin</option>
             <option value="agent" selected="{{ $agent->user->role === 'agent' }}">Agent</option>

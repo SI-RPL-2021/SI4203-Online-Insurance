@@ -34,6 +34,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'admin'])->g
     ]);
     Route::resource('policies', PolicyController::class)->except(['show']);
     Route::resource('hospitals', HospitalController::class)->except(['show']);
+    Route::resource('users', UserController::class)->only(['edit', 'update', 'destroy']);
 });
 
 // Admin & Agent
