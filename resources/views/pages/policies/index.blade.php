@@ -15,7 +15,7 @@
           <div class="d-flex flex-column h-100 justify-content-between">
             <div>
               <div class="mb-4 position-relative" style="padding-top: 33.33%">
-                <img class="top-0 rounded-3 position-absolute" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" src="/{{ $row->img }}" alt="">
+                <img class="top-0 rounded-3 position-absolute" style="width: 100%; height: 100%; object-fit: cover; object-position: top;" src="/uploads/{{ $row->img }}" alt="">
               </div>
               <h5 class="fw-bold">{{ $row->name }}</h5>
               <p>{{ $row->desc }}</p>

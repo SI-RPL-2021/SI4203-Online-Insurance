@@ -19,7 +19,7 @@
       <div class="card">
         <div class="card-body">
           <h4 class="fw-bold fs-2">
-          {{$subscriptionsPending}}
+            {{$subscriptionsPending}}
           </h4>
           <div class="text-gray-500">Jumlah subscription pending</div>
         </div>
@@ -29,14 +29,14 @@
       <div class="card">
         <div class="card-body">
           <h4 class="fw-bold fs-2">
-          {{$claimsPending}}
+            {{$claimsPending}}
           </h4>
           <div class="text-gray-500">Jumlah claim pending</div>
         </div>
       </div>
     </div>
   </div>
-  <h4>Daftar User</h4>
+  <h4>Daftar Customer</h4>
   <div>
     <table class="table">
       <thead>
@@ -48,10 +48,11 @@
       </thead>
       <tbody>
         @foreach ($customers as $customer)
-          <tr>
-            <td>{{ $customer->name }}</td>
-            <td>{{ $customer->email }}</td>
-          </tr>
+        <tr>
+          <td>{{ $loop->iteration }}</td>
+          <td>{{ $customer->name }}</td>
+          <td>{{ $customer->email }}</td>
+        </tr>
         @endforeach
       </tbody>
     </table>
